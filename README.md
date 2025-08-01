@@ -5,15 +5,15 @@ Click Game #Jerry
 
 - Click Jerry to upgrade/unlock weapons to click more Jerry.
 
-- At the start will only have a mouse trap and a jerry. Jerry is upgradable. 
-
-- Jerrys will spawn in random places in the map and you have to click them to get points.
+- At the start will only have a moes in the map and you have to click them to get points.
     - 3s per random
     - 1pt per click.
     - Buy "Jerrys" Upgrade for more Jerrys at the map.
 
 - Big Jerry: 
-    - every 7-15 min, click to disappear
+    - every 7-15 min, click to disapuse trap and a jerry. Jerry is upgradable. 
+
+- Jerrys will spawn in random placpear
     - 3000pt per click or all weapon upgrade price - 50%
 
 - Mouse Trap:
