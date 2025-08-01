@@ -19,42 +19,57 @@ Click Game #Jerry
 - Mouse Trap:
 
     - 3s per random 
-    - -2pt per click
-
+    - -50% pt you have per click
 ### Weapons
 
 
 - Grandma
     - Action: every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.
 
-    - Upgrade: Increase Range and -CD
+    - Price: Ascending *2
+
+    - Upgrade: Increase Radius and -CD
 
     - Max Grandmas: 1;
 
-- Hunter
 
 - Tom
 
+    - **Action**: Tom will increase your click-power based on how much Toms you own (ex. 1 tom = + 0.5 click-power)
+
+    - **Upgrade**: More Click-Power
+
+    - **Price**: Ascending *2 (10)
+
+    - **Max**: Unlimited
+
+
 - Spike
 
-    - Benefit: Auto Catch Jerry
-    - Catch: Need 1pt per catch
+    - **Action**: Auto gain points every certain amount of time, need to feed bone or he will be angry and not help you (buy bone from shop)
+
+    - **Upgrade**: -time , more points , consume more bones (5 time upgrade=+1 bone);
+
+    - **Price**: Ascending + 500 (100)
+
+    - **Max**: Unlimited
+
 
 - Jerry Upgrade
 
 
-    - **Action** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap
+    - **Upgradable** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap
     - **Price** : Ascending * 1.5
     - **Max** : Unlimited
 
 - Godzilla
     - **Action** : One time use weapon, clear all the Jerrys in a *row*
-    - **Price** : 700
+    - **Price** : Ascending * 2.5
     - **Max** : Two per time. 
 
 - Bart Simpson
     - **Action** : One time use weapon, clear all the Jerrys on the board
-    - **Price** : 1200
+    - **Price** : Ascending * 3.2
     - **Max** : One per time.
 
 
