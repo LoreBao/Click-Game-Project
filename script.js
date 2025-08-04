@@ -41,3 +41,21 @@ class BasicJerrys{
         
     }
 }
+
+class GameManager{
+    constructor(){
+        this.score=0;
+        this.objects=[];
+
+        this.clickArea={
+            x:0,
+            y:0,
+        };
+
+        document.addEventListener("click",(e)=>{
+            this.clickArea.x=e.clientX;
+            this.clickArea.y=e.clientY;
+        })
+    }
+}
+
