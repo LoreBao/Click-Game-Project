@@ -1,0 +1,15 @@
+[
+    {
+        "type": "Jerry",
+        "img":"jerry_sheet.png",
+        "reward": 1
+    },
+
+    {
+        "type": "trap",
+        "img": "trap.png"
+
+    }
+
+
+]
