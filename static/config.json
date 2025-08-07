@@ -9,7 +9,45 @@
         "type": "trap",
         "img": "trap.png"
 
+    },
+
+    {
+        "type": "Bart_Simpson",
+        "img": "simpson.png",
+        "framecount":13,
+        "frametime":2000
+    },
+
+    {
+        "type": "Godzilla",
+        "img": "godzilla.png",
+        "framecount" : 3,
+        "frametime" :2000
+    },
+
+    {
+        "type":"tom",
+        "img":"tom.png",
+        "framecount":4,
+        "frametime":2000
+    },
+
+    {
+        "type":"dog",
+        "img":"dog.png",
+        "framecount":3,
+        "frametime":2000
+    },
+    {
+        "type":"grandma",
+        "img":"grandma.png",
+        "framecount":7,
+        "frametime":2000
     }
+
+
+
+
 
 
 ]
