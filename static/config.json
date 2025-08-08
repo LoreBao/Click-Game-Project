@@ -1,8 +1,15 @@
 [
     {
         "type": "Jerry",
-        "img":"jerry_sheet.png",
-        "reward": 1
+        "img":"godzilla.png",
+        "moveDuration":3000,
+        "reward": 1,
+        "sx":118,
+        "sy":3380,
+        "width":100,
+        "height":120,
+        "framecount" : 3,
+        "frametime" :200
     },
 
     {
@@ -15,39 +22,37 @@
         "type": "Bart_Simpson",
         "img": "simpson.png",
         "framecount":13,
-        "frametime":2000
+        "frametime":200
     },
 
     {
         "type": "Godzilla",
         "img": "godzilla.png",
+        "sx":118,
+        "sy":3380,
+        "width":100,
+        "height":120,
         "framecount" : 3,
-        "frametime" :2000
+        "frametime" :200
     },
 
     {
         "type":"tom",
         "img":"tom.png",
         "framecount":4,
-        "frametime":2000
+        "frametime":200
     },
 
     {
         "type":"dog",
         "img":"dog.png",
         "framecount":3,
-        "frametime":2000
+        "frametime":200
     },
     {
         "type":"grandma",
         "img":"grandma.png",
         "framecount":7,
-        "frametime":2000
+        "frametime":200
     }
-
-
-
-
-
-
 ]
