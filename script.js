@@ -83,6 +83,12 @@ class BasicJerrys {
     }
 }
 
+class Trap extends BasicJerrys{
+    constructor(config) {
+        super(config);
+    }
+}
+
 class SpriteManager {
     constructor(config) {
         this.img = config.img;
@@ -176,5 +182,14 @@ function startGame(){
 
 // Upgrade Function : TODO
 function upgradeJerrys(gameManger,key){
+    const UpgradeTable=document.createElement("div");
+    UpgradeTable.id="upgradetable";
+    const p=UpgradeTable.createElement("p")
+    p.textContent="Upgrade for More Jerrys!";
+    const j=UpgradeTable.createElement("btn");
+    j.addEventListener("click",()=>{
+        const a= new BasicJerrys();
+        a();
+    })
 
 }

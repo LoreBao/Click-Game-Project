@@ -21,6 +21,10 @@
     {
         "type": "Bart_Simpson",
         "img": "simpson.png",
+        "sx":0,
+        "sy":260,
+        "width":63,
+        "height":90,
         "framecount":13,
         "frametime":200
     },
@@ -39,6 +43,10 @@
     {
         "type":"tom",
         "img":"tom.png",
+        "sx":0,
+        "sy":197,
+        "width":240,
+        "height":140,
         "framecount":4,
         "frametime":200
     },
@@ -46,12 +54,20 @@
     {
         "type":"dog",
         "img":"dog.png",
+        "sx":35,
+        "sy":280,
+        "width":845,
+        "height":880,
         "framecount":3,
         "frametime":200
     },
     {
         "type":"grandma",
         "img":"grandma.png",
+        "sx":35,
+        "sy":770,
+        "width":135,
+        "height":210,
         "framecount":7,
         "frametime":200
     }
