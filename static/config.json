@@ -14,8 +14,13 @@
 
     {
         "type": "trap",
-        "img": "trap.png"
-
+        "img": "trap (1).png",
+        "sx":530,
+        "sy":290,
+        "width":100,
+        "height":70,
+        "framecount":3,
+        "frametime":200
     },
 
     {

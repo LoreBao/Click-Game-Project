@@ -181,7 +181,7 @@ function startGame(){
 }
 
 // Upgrade Function : TODO
-function upgradeJerrys(gameManger,key){
+function upgradeJerrys(gameManager,key){
     const UpgradeTable=document.createElement("div");
     UpgradeTable.id="upgradetable";
     const p=UpgradeTable.createElement("p")
