@@ -10,27 +10,61 @@ canvas.height = HEIGHT;
 const IMG_WIDTH = 150;
 const IMG_HEIGHT = 150;
 
-let config = {};
+let CONFIG = {};
 
 (async function () {
-    const configData = await fetch(".static/config.json").then(r => r.json());
-    config = Object.fromEntries(configData.map(function (value) {
+    const configData = await fetch("static/config.json").then(r => r.json());
+    CONFIG = Object.fromEntries(configData.map(function (value) {
         const img = new Image();
-        img.src = "./static/" + value.img;
+        img.src = "static/" + value.img;
         return [value.type, { ...value, img }];
     }));
     startGame();
 })();
 
 class BasicWeapons {
-    constructor(image, score, price) {
-        this.image = image; //img:"image path"//
-        this.score = score; //score:"weapons effect"//
-        this.price = price; //price:"weapons cost"//
+    constructor(config,gameManager) {
+        this.image = config.img; //img:"image path"//
+        this.pos=this.randomPos();
+        this.width=config.width;
+        this.height=config.height;
+        this.rangew=config.range_w;
+        this.rangeh=config.range_h;
+        this.spritemanager=new SpriteManager(config);
+        this.gamemanager=gameManager;
+        this.cd=config.actionInterval;
+        this.nextAction=Date.now()+this.cd;
+        this.flashDuration=config.flashDuration;
+        this.visibleUntil=0;
+    }
+
+    randomPos(){
+        let randomX = Math.floor(Math.random() * (WIDTH - this.rangew));
+        let randomY = Math.floor(Math.random() * (HEIGHT - this.rangeh));
+
+        return {
+            x: randomX,
+            y: randomY,
+        }
     }
 
     action() {
-        // Template: Implete by Specific Class //
+        if(Date.now()<this.nextAction){
+            return;
+        }
+       let total=0;
+       this.gameManager.objects.jerrys.forEach((e)=>{
+            if(e.pos.x>=this.pos.x&&e.pos.x<=this.pos.x+this.rangew
+                &&e.pos.y>=this.pos.y&&e.pos.y<=this.pos.y+this.rangeh
+            ){
+                total++;
+            }
+       })
+
+       this.gamemanager.score+=(total*CONFIG["Jerry"].reward);
+       this.nextAction=Date.now()+this.cd;
+
+       this.visibleUntil=Date.now()+this.flashDuration;
     }
 
     Upgrade() {
@@ -39,6 +73,10 @@ class BasicWeapons {
 
     draw() {
         // Template: Implete by Specific Class //
+        // Template: Implete by Specific Class //
+        if(Date.now()<=this.visibleUntil){
+            this.spritemanager.drawSprite(this.pos.x,this.pos.y);
+        }
     }
 }
 
@@ -100,6 +138,7 @@ class SpriteManager {
         this.frameDuration = config.frameDuration;
         this.frameIndex = 0;
         this.nextframe = Date.now() + this.frameDuration;
+        this.cfg=config;
     }
 
     drawSprite(x, y) {
@@ -107,7 +146,13 @@ class SpriteManager {
             this.frameIndex = (this.frameIndex + 1) % this.frameCount;
             this.nextframe = Date.now() + this.frameDuration;
         }
-        ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+
+        if("range_w" in this.cfg){
+            ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
+        }
+        else{   
+            ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+        }
     }
 }
 
@@ -115,8 +160,8 @@ class GameManager {
     constructor() {
         this.score = 0;
         this.objects = {
-            jerrys:[new BasicJerrys(config["Jerry"])],
-            toms:[],
+            jerrys:[new BasicJerrys(CONFIG["Jerry"])],
+            toms:[]
         };
 
         this.clickArea = {
@@ -140,6 +185,7 @@ class GameManager {
 
     gameLoop(){
         ctx.clearRect(0,0,WIDTH,HEIGHT);
+        console.log(this.objects.jerrys);
         this.objects.jerrys.forEach((e)=>{
             e.draw();
         })
@@ -187,9 +233,10 @@ function upgradeJerrys(gameManager,key){
     const p=UpgradeTable.createElement("p")
     p.textContent="Upgrade for More Jerrys!";
     const j=UpgradeTable.createElement("btn");
+    UpgradeTable.appendChild();
     j.addEventListener("click",()=>{
         const a= new BasicJerrys();
-        a();
+        gameManager.objects.jerrys.push(a);
     })
 
 }

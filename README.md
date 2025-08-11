@@ -65,7 +65,7 @@ Click Game #Jerry
 - Godzilla
     - **Action** : One time use weapon, clear all the Jerrys in a *row*
     - **Price** : Ascending * 2.5
-    - **Max** : Two per time. 
+    - **Max** : Maximun 1, each Godzilla can only be used two times.
 
 - Bart Simpson
     - **Action** : One time use weapon, clear all the Jerrys on the board
