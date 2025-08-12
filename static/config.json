@@ -5,11 +5,20 @@
         "moveDuration":3000,
         "reward": 1,
         "sx":1,
-        "sy":1,
+        " sy":1,
         "width":1,
         "height":1,
         "frameCount" : 3,
-        "frameDuration" :200
+        "frameDuration" :200,
+        "unlock":true,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":"Increase Your Jerrys, However 25% it will summon a trap!",
+                "price":10,
+                "priceFactor":1.5
+            },
+            "reduceCD":{}
+        }
     },
 
     {
@@ -21,7 +30,7 @@
         "sy":290,
         "width":100,
         "height":70,
-        "framecount":3,
+        "frameCount":3,
         "frametime":200
     },
 
@@ -32,8 +41,18 @@
         "sy":260,
         "width":63,
         "height":90,
-        "framecount":13,
-        "frametime":200
+        "frameCount":13,
+        "frametime":200,
+        "unlock":false,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":"Clear all The Jerrys",
+                "price":3000,
+                "priceFactor":3.2
+            },
+            "reduceCD":{}
+        }
+
     },
 
     {
@@ -43,8 +62,22 @@
         "sy":3380,
         "width":100,
         "height":120,
-        "framecount" : 3,
-        "frametime" :200
+        "range_h":200,
+        "range_w":0,
+        "frameCount" : 3,
+        "frametime" :200,
+        "limit": 2,
+        "flashDuration":800,
+        "actionInterval":15000,
+        "unlock":false,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":"Clear one row of Jerrys",
+                "price":2500,
+                "priceFactor":2.5
+            },
+            "reduceCD":{}
+        }
     },
 
     {
@@ -54,8 +87,18 @@
         "sy":197,
         "width":240,
         "height":140,
-        "framecount":4,
-        "frametime":200
+        "frameCount":4,
+        "frametime":200,
+        "unlock":false,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":" Tom will increase your click-power based on how much Toms you own ",
+                "price":300,
+                "priceFactor":2
+            },
+            "reduceCD":{}
+        }
+
     },
 
     {
@@ -65,8 +108,18 @@
         "sy":280,
         "width":845,
         "height":880,
-        "framecount":3,
-        "frametime":200
+        "frameCount":3,
+        "frametime":200,
+        "unlock":false,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":"Auto GAIN clicks",
+                "price":700,
+                "priceFactor":500
+            },
+            "reduceCD":{}
+        }
+
     },
     {
         "type":"grandma",
@@ -75,11 +128,21 @@
         "sy":770,
         "width":135,
         "height":210,
-        "framecount":7,
+        "frameCount":7,
         "frametime":200,
         "range_w":210,
         "range_h":210,
         "actionInterval":25000,
-        "flashDuration":800
+        "flashDuration":800,
+        "unlock":false,
+        "upgradeInfo":{
+            "addAmount":{
+                "desc":" every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.",
+                "price":1300,
+                "priceFactor":2
+            },
+            "reduceCD":{}
+        }
+
     }
 ]

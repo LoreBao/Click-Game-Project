@@ -31,7 +31,7 @@ class BasicWeapons {
         this.rangew=config.range_w;
         this.rangeh=config.range_h;
         this.spritemanager=new SpriteManager(config);
-        this.gamemanager=gameManager;
+        this.gameManager=gameManager;
         this.cd=config.actionInterval;
         this.nextAction=Date.now()+this.cd;
         this.flashDuration=config.flashDuration;
@@ -61,7 +61,7 @@ class BasicWeapons {
             }
        })
 
-       this.gamemanager.score+=(total*CONFIG["Jerry"].reward);
+       this.gameManager.score+=(total*CONFIG["Jerry"].reward);
        this.nextAction=Date.now()+this.cd;
 
        this.visibleUntil=Date.now()+this.flashDuration;
@@ -142,7 +142,7 @@ class SpriteManager {
     }
 
     drawSprite(x, y) {
-        if (Date.now > this.nextframe) {
+        if (Date.now() > this.nextframe) {
             this.frameIndex = (this.frameIndex + 1) % this.frameCount;
             this.nextframe = Date.now() + this.frameDuration;
         }
@@ -152,6 +152,29 @@ class SpriteManager {
         }
         else{   
             ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+        }
+    }
+}
+
+class Godzilla extends BasicWeapons{
+    constructor(config,gameManager){
+        super(config,gameManager);
+        this.usedtime=0;
+        this.limit=config.limit;
+        this.valid=true;
+        
+        if(this.rangew>=WIDTH){
+            this.rangew=WIDTH;
+        }
+    }
+
+    action(){
+        if(this.valid){
+            super.action();
+            this.usedtime++;
+            if(this.usedtime>=this.limit){
+                this.valid=false;
+            }
         }
     }
 }
@@ -181,21 +204,23 @@ class GameManager {
            
         })
 
-    }
+        this.gameLoop=()=>{
+            ctx.clearRect(0,0,WIDTH,HEIGHT);
+            console.log(this.objects.jerrys);
+            this.objects.jerrys.forEach((e)=>{
+                e.draw();
+            })
+        }
 
-    gameLoop(){
-        ctx.clearRect(0,0,WIDTH,HEIGHT);
-        console.log(this.objects.jerrys);
-        this.objects.jerrys.forEach((e)=>{
-            e.draw();
-        })
-        requestAnimationFrame(this.gameLoop);
+        requestAnimationFrame(this.gameLoop)
+
+        render(this,CONFIG);
     }
 
     clickCoord(e){
         const cRect=canvas.getBoundingClientRect();
-        const clientX=e.clientX;
-        const clientY=e.clientY;
+        let clientX=e.clientX;
+        let clientY=e.clientY;
 
         clientX-=cRect.left;
         clientY-=cRect.top;
@@ -228,15 +253,71 @@ function startGame(){
 
 // Upgrade Function : TODO
 function upgradeJerrys(gameManager,key){
-    const UpgradeTable=document.createElement("div");
-    UpgradeTable.id="upgradetable";
-    const p=UpgradeTable.createElement("p")
-    p.textContent="Upgrade for More Jerrys!";
-    const j=UpgradeTable.createElement("btn");
-    UpgradeTable.appendChild();
-    j.addEventListener("click",()=>{
-        const a= new BasicJerrys();
-        gameManager.objects.jerrys.push(a);
+    switch(key){
+        case "addAmount":
+            gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+            break;
+    }
+
+}
+
+function render(gameManager,config){
+    const upgradeContainer=document.getElementById("UpgradeTable");
+    upgradeContainer.innerHTML="";
+    Object.entries(config).forEach(([type,info])=>{ //type: "Jerry", info :{"type":"Jerry","width":100..etc}
+        const div=document.createElement("div");
+        div.id=type;
+        div.classList.add("character-panel");
+        const header=document.createElement("h3");
+        header.textContent=type;
+        div.appendChild(header);
+        // <----[ -UNLOCK- ]-----> //
+
+        if(info.unlock){
+            const ul=document.createElement("ul");
+            Object.entries(info.upgradeInfo).forEach(([key,skillInfo])=>{
+                //key: addAmount, skillInfo: {"desc":"..","price":100...etc}
+                const li=document.createElement("li");
+                li.textContent=`${skillInfo.desc} | Price: ${skillInfo.price} | Increase Factor: ${skillInfo.priceFactor}`;
+                const upgradeButton=document.createElement("button");
+                upgradeButton.textContent=key;
+                upgradeButton.addEventListener("click", (e)=>{
+                    // <----- [ -Todo- ]-----> //
+                    const targetFunction=findUpgradeFunction(type);
+                    if(targetFunction){
+                        targetFunction();
+                    }
+                })
+                li.appendChild(upgradeButton);
+                ul.appendChild(li);
+                
+            })
+            div.appendChild(ul);
+        }
+        else{
+            // Lock //
+            const lockBtn=document.createElement("button");
+            lockBtn.textContent="Unlock";
+            lockBtn.addEventListener("click",(e)=>{
+                //To-do;
+            })
+            div.appendChild(lockBtn);
+        }
+
+        upgradeContainer.appendChild(div);
+
     })
+}
+
+function findUpgradeFunction(type){
+    switch(type){
+        case "grandma":
+            return upgradeGrandma;
+        case  "Jerry":
+            return upgradeJerrys;
+    }
+}
+
+function upgradeGrandma(){
 
 }
