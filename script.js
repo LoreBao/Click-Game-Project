@@ -26,6 +26,7 @@ class BasicWeapons {
     constructor(config,gameManager) {
         this.image = config.img; //img:"image path"//
         this.pos=this.randomPos();
+        this._pendingPos=null;
         this.width=config.width;
         this.height=config.height;
         this.rangew=config.range_w;
@@ -50,9 +51,10 @@ class BasicWeapons {
 
     action() {
         if(Date.now()<this.nextAction){
-            return;
+            return false;
         }
        let total=0;
+      
        this.gameManager.objects.jerrys.forEach((e)=>{
             if(e.pos.x>=this.pos.x&&e.pos.x<=this.pos.x+this.rangew
                 &&e.pos.y>=this.pos.y&&e.pos.y<=this.pos.y+this.rangeh
@@ -65,6 +67,8 @@ class BasicWeapons {
        this.nextAction=Date.now()+this.cd;
 
        this.visibleUntil=Date.now()+this.flashDuration;
+       this._pendingPos=this.randomPos();
+       return true;
     }
 
     Upgrade() {
@@ -74,8 +78,17 @@ class BasicWeapons {
     draw() {
         // Template: Implete by Specific Class //
         // Template: Implete by Specific Class //
+        
+        this.action();
+
         if(Date.now()<=this.visibleUntil){
             this.spritemanager.drawSprite(this.pos.x,this.pos.y);
+        }
+        else{
+            if(this._pendingPos){
+                this.pos=this._pendingPos;
+                this._pendingPos=null;
+            }
         }
     }
 }
@@ -148,10 +161,10 @@ class SpriteManager {
         }
 
         if("range_w" in this.cfg){
-            ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
+            ctx.drawImage(this.img, this.sx  (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
         }
         else{   
-            ctx.drawImage(this.img, this.sx * (this.frameIndex + 1), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+            ctx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
         }
     }
 }
@@ -184,7 +197,9 @@ class GameManager {
         this.score = 0;
         this.objects = {
             jerrys:[new BasicJerrys(CONFIG["Jerry"])],
-            toms:[]
+            toms:[],
+            traps:[],
+            grandmas:[]
         };
 
         this.clickArea = {
@@ -200,21 +215,39 @@ class GameManager {
                     this.score+=jerry.reward;
                     this.updateBoard();
                 }
+                
+            })
+
+            this.objects.traps.forEach((traps)=>{
+                if(traps.clicked(this.clickArea)){
+                    this.score=Math.floor((1+traps.reward/100)*this.score);
+                    this.updateBoard();
+                }
             })
            
         })
 
         this.gameLoop=()=>{
             ctx.clearRect(0,0,WIDTH,HEIGHT);
-            console.log(this.objects.jerrys);
             this.objects.jerrys.forEach((e)=>{
                 e.draw();
             })
+
+            this.objects.traps.forEach((e)=>{
+                e.draw();
+            })
+
+            this.objects.grandmas.forEach((e)=>{
+                e.draw();
+            })
+
+            requestAnimationFrame(this.gameLoop);
         }
 
-        requestAnimationFrame(this.gameLoop)
-
         render(this,CONFIG);
+
+        this.gameLoop();
+
     }
 
     clickCoord(e){
@@ -248,14 +281,32 @@ class GameManager {
 
 function startGame(){
     const gameManager=new GameManager();
-    gameManager.gameLoop();
+
+
 }
 
 // Upgrade Function : TODO
-function upgradeJerrys(gameManager,key){
+function upgradeJerry(gameManager,key){
+    let jconfig=CONFIG["Jerry"];
     switch(key){
         case "addAmount":
-            gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+            if(gameManager.score>=jconfig.upgradeInfo.addAmount.price){
+                if(Math.random()<=1){
+                    gameManager.objects.traps.push(new Trap(CONFIG["Trap"]));
+                }
+                else{
+                    gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+                }
+
+                gameManager.score-=jconfig.upgradeInfo.addAmount.price;
+                CONFIG["Jerry"].upgradeInfo.addAmount.price=Math.floor(jconfig.upgradeInfo.addAmount.priceFactor*jconfig.upgradeInfo.addAmount.price);
+                render(gameManager,CONFIG);
+                gameManager.updateBoard();
+
+            }
+            else{
+                alert("No Money , Poor! -Jerry ")
+            }
             break;
     }
 
@@ -283,9 +334,10 @@ function render(gameManager,config){
                 upgradeButton.textContent=key;
                 upgradeButton.addEventListener("click", (e)=>{
                     // <----- [ -Todo- ]-----> //
+                    
                     const targetFunction=findUpgradeFunction(type);
                     if(targetFunction){
-                        targetFunction();
+                        targetFunction(gameManager,key);
                     }
                 })
                 li.appendChild(upgradeButton);
@@ -299,7 +351,12 @@ function render(gameManager,config){
             const lockBtn=document.createElement("button");
             lockBtn.textContent="Unlock";
             lockBtn.addEventListener("click",(e)=>{
-                //To-do;
+                console.log("Trigger Unlock");
+                const targetFunction=findUpgradeFunction(type);
+                if(targetFunction){
+
+                    targetFunction(gameManager,"Unlock");
+                }    
             })
             div.appendChild(lockBtn);
         }
@@ -311,13 +368,27 @@ function render(gameManager,config){
 
 function findUpgradeFunction(type){
     switch(type){
-        case "grandma":
+        case "Grandma":
             return upgradeGrandma;
         case  "Jerry":
-            return upgradeJerrys;
+            return upgradeJerry;
     }
 }
 
-function upgradeGrandma(){
-
+function upgradeGrandma(gameManager,key){
+    let gconfig=CONFIG["Grandma"];
+    switch(key){
+        case "Unlock":
+            if(gameManager.score>=gconfig.unlockPrice&&gconfig.unlock==false){
+                CONFIG["Grandma"].unlock=true;
+                gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"]));
+                gameManager.score-=gconfig.unlockPrice;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+            break;
+        case "reduceCD":
+            //<-|--[<*-TODO-*>]--|->//
+            break;
+    }
 }

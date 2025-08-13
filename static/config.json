@@ -1,13 +1,13 @@
 [
     {
         "type": "Jerry",
-        "img":"jerry.png",
+        "img":"godzilla.png",
         "moveDuration":3000,
-        "reward": 1,
-        "sx":1,
-        " sy":1,
-        "width":1,
-        "height":1,
+        "reward": 1000,
+        "sx":118,
+        "sy":3380,
+        "width":100,
+        "height":120,
         "frameCount" : 3,
         "frameDuration" :200,
         "unlock":true,
@@ -22,7 +22,7 @@
     },
 
     {
-        "type": "trap",
+        "type": "Trap",
         "img": "trap.png",
         "moveDuration":3000,
         "reward":-50,
@@ -31,7 +31,10 @@
         "width":100,
         "height":70,
         "frameCount":3,
-        "frametime":200
+        "frameDuration":200,
+        "unlock":true,
+        "upgradeInfo":{
+        }
     },
 
     {
@@ -42,7 +45,7 @@
         "width":63,
         "height":90,
         "frameCount":13,
-        "frametime":200,
+        "frameDuration":200,
         "unlock":false,
         "upgradeInfo":{
             "addAmount":{
@@ -65,7 +68,7 @@
         "range_h":200,
         "range_w":0,
         "frameCount" : 3,
-        "frametime" :200,
+        "frameDuration" :200,
         "limit": 2,
         "flashDuration":800,
         "actionInterval":15000,
@@ -88,7 +91,7 @@
         "width":240,
         "height":140,
         "frameCount":4,
-        "frametime":200,
+        "frameDuration":200,
         "unlock":false,
         "upgradeInfo":{
             "addAmount":{
@@ -109,7 +112,7 @@
         "width":845,
         "height":880,
         "frameCount":3,
-        "frametime":200,
+        "frameDuration":200,
         "unlock":false,
         "upgradeInfo":{
             "addAmount":{
@@ -122,26 +125,29 @@
 
     },
     {
-        "type":"grandma",
+        "type":"Grandma",
         "img":"grandma.png",
         "sx":35,
         "sy":770,
         "width":135,
         "height":210,
         "frameCount":7,
-        "frametime":200,
+        "frameDuration":200,
         "range_w":210,
         "range_h":210,
-        "actionInterval":25000,
+        "actionInterval":1000,
         "flashDuration":800,
         "unlock":false,
+        "unlockPrice":130,
         "upgradeInfo":{
             "addAmount":{
                 "desc":" every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.",
                 "price":1300,
                 "priceFactor":2
             },
-            "reduceCD":{}
+            "reduceCD":{
+                "seconds":
+            }
         }
 
     }
