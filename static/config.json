@@ -42,10 +42,15 @@
         "img": "simpson.png",
         "sx":0,
         "sy":260,
+        "range_h":200,
+        "range_w":200,
         "width":63,
         "height":90,
         "frameCount":13,
         "frameDuration":200,
+        "limit": 2,
+        "flashDuration":800,
+        "actionInterval":15000,
         "unlock":false,
         "upgradeInfo":{
             "addAmount":{
@@ -146,7 +151,7 @@
                 "priceFactor":2
             },
             "reduceCD":{
-                "seconds":
+                "seconds":0
             }
         }
 

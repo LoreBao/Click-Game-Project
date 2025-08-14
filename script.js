@@ -140,6 +140,8 @@ class Trap extends BasicJerrys{
     }
 }
 
+
+
 class SpriteManager {
     constructor(config) {
         this.img = config.img;
@@ -191,6 +193,29 @@ class Godzilla extends BasicWeapons{
         }
     }
 }
+
+class Bartsimpson extends Godzilla{
+    constructor(config,gameManager){
+        super(config,gameManager);
+        this.usedtime=0;
+        this.limit=config.limit;
+        this.valid=true
+
+    if(this.rangew>=WIDTH){
+        this.rangew=WIDTH;
+    }
+    
+    action(){
+        if(this.valid){
+            super.action();
+            if(this.usedtime>=this.limit){
+                this.valid=false;
+            }
+        }
+    }
+}
+
+
 
 class GameManager {
     constructor() {
@@ -388,7 +413,18 @@ function upgradeGrandma(gameManager,key){
             }
             break;
         case "reduceCD":
-            //<-|--[<*-TODO-*>]--|->//
+            if(actionInterval){
+                gameManager.objects.grandmas.pop();
+                gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"]));
+                render(gameManager,CONFIG);
+            }
             break;
     }
+
+
+    gameManager.score-= gconfig.upgradeInfo.addAmount.price;
+    CONFIG["Grandma"].upgradeInfo.addAmount.price=Math.floor(gconfig.upgradeInfo.addAmount.priceFactor*gconfig.upgradeInfo.addAmount.price);
+    render(gameManager,CONFIG);
+    gameManager.updateBoard();
+
 }
