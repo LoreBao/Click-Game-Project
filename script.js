@@ -24,6 +24,7 @@ let CONFIG = {};
 
 class BasicWeapons {
     constructor(config,gameManager) {
+        this.cfg=config;
         this.image = config.img; //img:"image path"//
         this.pos=this.randomPos();
         this._pendingPos=null;
@@ -83,6 +84,7 @@ class BasicWeapons {
 
         if(Date.now()<=this.visibleUntil){
             this.spritemanager.drawSprite(this.pos.x,this.pos.y);
+            console.log(`Draw: ${this.cfg.type} success!`);  
         }
         else{
             if(this._pendingPos){
@@ -163,7 +165,7 @@ class SpriteManager {
         }
 
         if("range_w" in this.cfg){
-            ctx.drawImage(this.img, this.sx  (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
+            ctx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
         }
         else{   
             ctx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
@@ -185,11 +187,15 @@ class Godzilla extends BasicWeapons{
 
     action(){
         if(this.valid){
-            super.action();
-            this.usedtime++;
+            if(super.action()){
+                this.usedtime++;
+            }
+
+
             if(this.usedtime>=this.limit){
                 this.valid=false;
             }
+            
         }
     }
 }
@@ -197,21 +203,16 @@ class Godzilla extends BasicWeapons{
 class Bartsimpson extends Godzilla{
     constructor(config,gameManager){
         super(config,gameManager);
-        this.usedtime=0;
-        this.limit=config.limit;
-        this.valid=true
+        config.range_w=WIDTH;
+        config.range_h=HEIGHT;
 
-    if(this.rangew>=WIDTH){
         this.rangew=WIDTH;
+        this.rangeh=HEIGHT;
+
     }
     
     action(){
-        if(this.valid){
-            super.action();
-            if(this.usedtime>=this.limit){
-                this.valid=false;
-            }
-        }
+        
     }
 }
 
@@ -224,7 +225,9 @@ class GameManager {
             jerrys:[new BasicJerrys(CONFIG["Jerry"])],
             toms:[],
             traps:[],
-            grandmas:[]
+            grandmas:[],
+            godzillas:[],
+            bartsimpsons:[]
         };
 
         this.clickArea = {
@@ -252,24 +255,20 @@ class GameManager {
            
         })
 
+
+        render(this,CONFIG);
+
         this.gameLoop=()=>{
             ctx.clearRect(0,0,WIDTH,HEIGHT);
-            this.objects.jerrys.forEach((e)=>{
-                e.draw();
-            })
-
-            this.objects.traps.forEach((e)=>{
-                e.draw();
-            })
-
-            this.objects.grandmas.forEach((e)=>{
-                e.draw();
+           
+            Object.entries(this.objects).forEach(([key,arr])=>{
+                arr.forEach((e)=>{
+                    e.draw();
+                })
             })
 
             requestAnimationFrame(this.gameLoop);
         }
-
-        render(this,CONFIG);
 
         this.gameLoop();
 
@@ -329,7 +328,10 @@ function upgradeJerry(gameManager,key){
                 gameManager.updateBoard();
 
             }
-            else{
+            else{                gameManager.score-=jconfig.upgradeInfo.addAmount.price;
+                CONFIG["Jerry"].upgradeInfo.addAmount.price=Math.floor(jconfig.upgradeInfo.addAmount.priceFactor*jconfig.upgradeInfo.addAmount.price);
+                render(gameManager,CONFIG);
+                gameManager.updateBoard();
                 alert("No Money , Poor! -Jerry ")
             }
             break;
@@ -397,6 +399,10 @@ function findUpgradeFunction(type){
             return upgradeGrandma;
         case  "Jerry":
             return upgradeJerry;
+        case "Godzilla":
+            return upgradeGodzilla;
+        case "Bart_Simpson":
+            return upgradeBartSimpson;
     }
 }
 
@@ -406,25 +412,100 @@ function upgradeGrandma(gameManager,key){
         case "Unlock":
             if(gameManager.score>=gconfig.unlockPrice&&gconfig.unlock==false){
                 CONFIG["Grandma"].unlock=true;
-                gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"]));
+                gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"],gameManager));
                 gameManager.score-=gconfig.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
             }
             break;
         case "reduceCD":
-            if(actionInterval){
-                gameManager.objects.grandmas.pop();
-                gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"]));
+            if(gameManager.score>=gconfig.upgradeInfo.reduceCD.price){
+                gameManager.score-=gconfig.upgradeInfo.reduceCD.price;
+                gconfig.upgradeInfo.reduceCD.price=Math.floor(gconfig.upgradeInfo.reduceCD.price*gconfig.upgradeInfo.reduceCD.priceFactor)
+                gconfig.actionInterval=Math.floor(gconfig.actionInterval*0.95);
+                if(gconfig.flashDuration>gconfig.actionInterval){
+                    gconfig.flashDuration=gconfig.actionInterval;
+                }
+                gameManager.updateBoard();
                 render(gameManager,CONFIG);
+
+                let total=gameManager.objects.grandmas.length;
+                gameManager.objects.grandmas=[];
+
+                for(let i=0; i<total; i++){
+                    gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"],gameManager));
+                }
             }
             break;
     }
 
 
-    gameManager.score-= gconfig.upgradeInfo.addAmount.price;
-    CONFIG["Grandma"].upgradeInfo.addAmount.price=Math.floor(gconfig.upgradeInfo.addAmount.priceFactor*gconfig.upgradeInfo.addAmount.price);
-    render(gameManager,CONFIG);
-    gameManager.updateBoard();
+}
 
+function upgradeGodzilla(gameManager,key){
+    let config=CONFIG["Godzilla"];
+
+    switch(key){
+        case "Unlock":
+            if(gameManager.score>=config.unlockPrice&&config.unlock==false){
+                CONFIG["Godzilla"].unlock=true;
+                gameManager.objects.godzillas.push(new Godzilla(CONFIG["Godzilla"],gameManager));
+                gameManager.score-=config.unlockPrice;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+
+            }
+            break;
+        case "buyOne":
+            if(gameManager.score>=config.upgradeInfo.buyOne.price){
+                gameManager.score-=config.upgradeInfo.buyOne.price;
+                config.upgradeInfo.buyOne.price= Math.floor(config.upgradeInfo.buyOne.price*config.upgradeInfo.buyOne.priceFactor);
+                if(gameManager.objects.godzillas.length>=1){
+                    gameManager.objects.godzillas.pop();
+                }
+                gameManager.objects.godzillas.push(new Godzilla(CONFIG["Godzilla"],gameManager));
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+            break;
+        case "increaseRange":
+            if(gameManager.score>=config.upgradeInfo.increaseRange.price){
+                gameManager.score-=config.upgradeInfo.increaseRange.price;
+                config.upgradeInfo.increaseRange.price= Math.floor(config.upgradeInfo.increaseRange.price*config.upgradeInfo.increaseRange.priceFactor);
+                config.range_h=Math.floor(config.range_h*1.05);
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+
+            
+        
+    }
+}
+
+function upgradeBartSimpson(gameManager,key){
+    let config=CONFIG["Bart_Simpson"];
+
+    switch(key){
+        case "Unlock":
+            if(gameManager.score>=config.unlockPrice&&config.unlock==false){
+                CONFIG["Bart_Simpson"].unlock=true;
+                gameManager.objects.bartsimpsons.push(new Bartsimpson(CONFIG["Bart_Simpson"],gameManager));
+                gameManager.score-=config.unlockPrice;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+            break;
+        case "buyOne":
+            if(gameManager.score>=config.upgradeInfo.buyOne.price){
+                gameManager.score-=config.upgradeInfo.buyOne.price;
+                config.upgradeInfo.buyOne.price= Math.floor(config.upgradeInfo.buyOne.price*config.upgradeInfo.buyOne.priceFactor);
+                if(gameManager.objects.bartsimpsons.length>=1){
+                    gameManager.objects.bartsimpsons.pop();
+                }
+                gameManager.objects.bartsimpsons.push(new Bartsimpson(CONFIG["Bart_Simpson"],gameManager));
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+            break;
+    }
 }

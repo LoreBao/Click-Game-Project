@@ -50,15 +50,15 @@
         "frameDuration":200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":15000,
+        "actionInterval":10000,
         "unlock":false,
+        "unlockPrice":800,
         "upgradeInfo":{
-            "addAmount":{
-                "desc":"Clear all The Jerrys",
+            "buyOne":{
+                "desc":"When Bought, Clear all the Jerrys",
                 "price":3000,
-                "priceFactor":3.2
-            },
-            "reduceCD":{}
+                "priceFactor":2
+            }
         }
 
     },
@@ -71,25 +71,30 @@
         "width":100,
         "height":120,
         "range_h":200,
-        "range_w":0,
+        "range_w":800,
         "frameCount" : 3,
         "frameDuration" :200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":15000,
+        "actionInterval":10000,
         "unlock":false,
+        "unlockPrice":499,
         "upgradeInfo":{
-            "addAmount":{
-                "desc":"Clear one row of Jerrys",
-                "price":2500,
-                "priceFactor":2.5
+            "buyOne":{
+                "desc":"When Bought, Clear all the Jerrys in a random row",
+                "price":700,
+                "priceFactor":1.1
             },
-            "reduceCD":{}
+            "increaseRange":{
+                "desc":"When Bought, Increases the Range by 5%",
+                "price":500,
+                "priceFactor":1.5
+            }
         }
     },
 
     {
-        "type":"tom",
+        "type":"Tom",
         "img":"tom.png",
         "sx":0,
         "sy":197,
@@ -98,6 +103,7 @@
         "frameCount":4,
         "frameDuration":200,
         "unlock":false,
+        "unlockPrice":599,
         "upgradeInfo":{
             "addAmount":{
                 "desc":" Tom will increase your click-power based on how much Toms you own ",
@@ -110,7 +116,7 @@
     },
 
     {
-        "type":"dog",
+        "type":"Dog",
         "img":"dog.png",
         "sx":35,
         "sy":280,
@@ -119,6 +125,7 @@
         "frameCount":3,
         "frameDuration":200,
         "unlock":false,
+        "unlockPrice":199,
         "upgradeInfo":{
             "addAmount":{
                 "desc":"Auto GAIN clicks",
@@ -151,7 +158,9 @@
                 "priceFactor":2
             },
             "reduceCD":{
-                "seconds":0
+                "desc":"Reduce CD by 5%/time",
+                "price":2000,
+                "priceFactor":1.5
             }
         }
 

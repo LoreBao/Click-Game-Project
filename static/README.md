@@ -11,10 +11,7 @@ Click Game #Jerry
     - Buy "Jerrys" Upgrade for more Jerrys at the map.
 
 - Big Jerry: 
-    - every 7-15 min, click to disapuse trap and a jerry. Jerry is upgradable. 
-
-- Jerrys will spawn in random placpear
-    - 3000pt per click or all weapon upgrade price - 50%
+    - every upgrade of Jerry, 10% of Big Jerry Appearance, click to delete all traps 
 
 - Mouse Trap:
 
@@ -24,7 +21,7 @@ Click Game #Jerry
 
 
 - Grandma
-    - Action: every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.
+    - Action: every 25s a grandma will appear and catch Jerrys in a certain square range,
 
     - Price: Ascending *2
 
@@ -58,7 +55,7 @@ Click Game #Jerry
 - Jerry Upgrade
 
 
-    - **Upgradable** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap
+    - **Upgradable** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap, 10% would summon a big Jerry and will delete all the traps!2!@!
     - **Price** : Ascending * 1.5
     - **Max** : Unlimited
 
