@@ -126,6 +126,7 @@
         "frameDuration":200,
         "unlock":false,
         "unlockPrice":199,
+        "actionInterval":10000,
         "upgradeInfo":{
             "addAmount":{
                 "desc":"Auto GAIN clicks",
@@ -133,7 +134,29 @@
                 "priceFactor":500
             },
             "reduceCD":{}
+        },
+        "gainPoint":10000,
+        "consumeBones":100,
+        "action1":{
+            "img":null,
+            "sx":0,
+            "sy":60,
+            "width":240,
+            "height":240,
+            "frameCount":3,
+            "frameDuration":200
+        },
+        "action2":{
+            "img":null,
+            "sx":120,
+            "sy":60,
+            "width":340,
+            "height":250,
+            "frameCount":3,
+            "frameDuration":200
         }
+        
+        
 
     },
     {

@@ -1,6 +1,12 @@
 const canvas = document.getElementById("UI");
 const ctx = canvas.getContext("2d");
 
+const sideCanvas = document.getElementById("side-screen");
+const sideCtx=sideCanvas.getContext("2d");
+
+sideCanvas.width=800;
+sideCanvas.height=300;
+
 const WIDTH = 800;
 const HEIGHT = 800;
 
@@ -32,7 +38,7 @@ class BasicWeapons {
         this.height=config.height;
         this.rangew=config.range_w;
         this.rangeh=config.range_h;
-        this.spritemanager=new SpriteManager(config);
+        this.spritemanager=new SpriteManager(config,mode);
         this.gameManager=gameManager;
         this.cd=config.actionInterval;
         this.nextAction=Date.now()+this.cd;
@@ -103,7 +109,7 @@ class BasicJerrys {
         this.width = config.width;
         this.height = config.height;
         this.moveduration=config.moveDuration;
-        this.spritemanager = new SpriteManager(config);
+        this.spritemanager = new SpriteManager(config,mode);
         this.nextMove = Date.now() + this.moveduration;
     }
 
@@ -145,7 +151,7 @@ class Trap extends BasicJerrys{
 
 
 class SpriteManager {
-    constructor(config) {
+    constructor(config,mode) {
         this.img = config.img;
         this.sx = config.sx;
         this.sy = config.sy;
@@ -156,6 +162,7 @@ class SpriteManager {
         this.frameIndex = 0;
         this.nextframe = Date.now() + this.frameDuration;
         this.cfg=config;
+        this.mode=mode;
     }
 
     drawSprite(x, y) {
@@ -163,13 +170,26 @@ class SpriteManager {
             this.frameIndex = (this.frameIndex + 1) % this.frameCount;
             this.nextframe = Date.now() + this.frameDuration;
         }
+        
+        if(this.mode==main){
+            if("range_w" in this.cfg){
+                ctx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
+            }
+            else{   
+                ctx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+            }
+        }
+        else if(this.mode==side){
+            if("range_w" in this.cfg){
+                sideCtx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
+            }
+            else{   
+                sideCtx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
+            }
+        }
 
-        if("range_w" in this.cfg){
-            ctx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
-        }
-        else{   
-            ctx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
-        }
+
+
     }
 }
 
@@ -216,6 +236,45 @@ class Bartsimpson extends Godzilla{
     }
 }
 
+class Dog{
+    constructor(cfg,gameManager){
+        this.cfg=cfg;
+        this.gameManager=gameManager;
+        this.type=cfg.type;
+        this.actionInterval=cfg.actionInterval;
+        this.gainPoint=cfg.gainPoint;
+        this.totalBones=0;
+        this.currentAction=cfg.currentAction;
+        this.nextAction=cfg.nextAction;
+        this.spriteManager={
+            "action1":cfg.action1,
+            "action2":cfg.action2,
+        }
+        this.pos={
+            x:100,
+            y:100
+        }
+    }
+
+    setAction(name){
+        if(name=="action1"){
+            this.spriteManager.frameIndex=0;
+        }
+    }
+
+    action(){
+        if(this.cfg.consumeBones<=this.totalBones){
+            this.totalBones-=this.cfg.consumeBones;
+            this.gameManager.score+=1;
+            this.setAction(action1);
+        }
+        else{
+            this.setAction(action2);
+        }
+    }
+
+
+}
 
 
 class GameManager {
