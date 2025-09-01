@@ -541,6 +541,26 @@ function upgradeGodzilla(gameManager,key){
     }
 }
 
+function upgradeDog(gameManager,key){
+    let config=CONFIG["Dog"];
+    
+    switch(key){
+        case "Unlock":
+            if(gameManager.score>=config.unlockPrice&&config.unlock==false){
+                CONFIG["Dog"].unlock=true;
+                gameManager.objects.dogs.push(new Bartsimpson(CONFIG["Dog"],gameManager));
+                gameManager.score-=config.unlockPrice;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
+            }
+            break;
+        case "buyBones":
+             if(gameManager.score>=config.consumeBones){
+                
+             }
+    }
+}
+
 function upgradeBartSimpson(gameManager,key){
     let config=CONFIG["Bart_Simpson"];
 
