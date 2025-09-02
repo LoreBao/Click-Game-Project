@@ -3,7 +3,7 @@
         "type": "Jerry",
         "img":"godzilla.png",
         "moveDuration":3000,
-        "reward": 1000,
+        "reward": 1,
         "sx":118,
         "sy":3380,
         "width":100,
@@ -105,12 +105,11 @@
         "unlock":false,
         "unlockPrice":599,
         "upgradeInfo":{
-            "addAmount":{
+            "buyOne":{
                 "desc":" Tom will increase your click-power based on how much Toms you own ",
                 "price":300,
                 "priceFactor":2
-            },
-            "reduceCD":{}
+            }
         }
 
     },
@@ -128,15 +127,21 @@
         "unlockPrice":199,
         "actionInterval":10000,
         "upgradeInfo":{
-            "addAmount":{
-                "desc":"Auto GAIN clicks",
-                "price":700,
-                "priceFactor":500
+            "buyBones":{
+                "desc":"Buy Bones to Feed the Spike!",
+                "price":100,
+                "priceFactor":1,
+                "amount":100
             },
-            "reduceCD":{}
+            "upgrade":{
+                "desc":" -time , more points , consume more bones (5 time upgrade=+1 bone)",
+                "price":500,
+                "priceFactor":1.5,
+                "ratio":0.1
+            }
         },
-        "gainPoint":10000,
-        "consumeBones":100,
+        "gainPoint":2,
+        "consumeBones":1,
         "action1":{
             "img":null,
             "sx":0,

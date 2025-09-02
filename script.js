@@ -25,20 +25,21 @@ let CONFIG = {};
         img.src = "static/" + value.img;
         return [value.type, { ...value, img }];
     }));
+    addLog("Game has Started!");
     startGame();
 })();
 
 class BasicWeapons {
     constructor(config,gameManager) {
         this.cfg=config;
-        this.image = config.img; //img:"image path"//
-        this.pos=this.randomPos();
-        this._pendingPos=null;
+        this.image = config.img;
         this.width=config.width;
         this.height=config.height;
         this.rangew=config.range_w;
         this.rangeh=config.range_h;
-        this.spritemanager=new SpriteManager(config,mode);
+        this.pos=this.randomPos();
+        this._pendingPos=null;
+        this.spritemanager=new SpriteManager(config,"main");
         this.gameManager=gameManager;
         this.cd=config.actionInterval;
         this.nextAction=Date.now()+this.cd;
@@ -104,12 +105,13 @@ class BasicWeapons {
 class BasicJerrys {
     constructor(config) {
         this.image = config.img; //img:"image path"//
+        this.width = config.width;
+        this.height = config.height; 
         this.reward = config.reward;
         this.pos = this.randomPos();
-        this.width = config.width;
-        this.height = config.height;
+
         this.moveduration=config.moveDuration;
-        this.spritemanager = new SpriteManager(config,mode);
+        this.spritemanager = new SpriteManager(config,"main");
         this.nextMove = Date.now() + this.moveduration;
     }
 
@@ -171,7 +173,7 @@ class SpriteManager {
             this.nextframe = Date.now() + this.frameDuration;
         }
         
-        if(this.mode==main){
+        if(this.mode=="main"){
             if("range_w" in this.cfg){
                 ctx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
             }
@@ -179,7 +181,7 @@ class SpriteManager {
                 ctx.drawImage(this.img, this.sx + (this.frameIndex * this.width), this.sy, this.width, this.height, x, y, IMG_WIDTH, IMG_HEIGHT);
             }
         }
-        else if(this.mode==side){
+        else if(this.mode=="side"){
             if("range_w" in this.cfg){
                 sideCtx.drawImage(this.img, this.sx + (this.frameIndex *  this.width), this.sy, this.width, this.height, x, y, this.cfg.range_w, this.cfg.range_h);
             }
@@ -230,10 +232,6 @@ class Bartsimpson extends Godzilla{
         this.rangeh=HEIGHT;
 
     }
-    
-    action(){
-        
-    }
 }
 
 class Dog{
@@ -245,10 +243,10 @@ class Dog{
         this.gainPoint=cfg.gainPoint;
         this.totalBones=0;
         this.currentAction=cfg.currentAction;
-        this.nextAction=cfg.nextAction;
-        this.spriteManager={
-            "action1":cfg.action1,
-            "action2":cfg.action2,
+        this.nextAction=Date.now()+this.actionInterval;
+        this.spriteManagers={
+            "action1":new SpriteManager(cfg.action1,"side"),
+            "action2":new SpriteManager(cfg.action2,"side")
         }
         this.pos={
             x:100,
@@ -258,22 +256,62 @@ class Dog{
 
     setAction(name){
         if(name=="action1"){
-            this.spriteManager.frameIndex=0;
+            this.currentAction="action1";
+            this.spriteManagers.action1.frameIndex=0;
+            this.spriteManagers.action1.nextframe=Date.now()+frameDuration;
+        }
+
+        else{
+            this.currentAction="action2";
+            this.spriteManagers.action2.frameIndex=0;
+            this.spriteManagers.action2.nextframe=Date.now()+frameDuration;
         }
     }
 
     action(){
-        if(this.cfg.consumeBones<=this.totalBones){
-            this.totalBones-=this.cfg.consumeBones;
-            this.gameManager.score+=1;
-            this.setAction(action1);
+        if(Date.now()>=this.nextAction){
+            if(this.cfg.consumeBones<=this.totalBones){
+                this.totalBones-=this.cfg.consumeBones;
+                this.gameManager.score+=this.gainPoint*this.consumeBones;
+                this.setAction(action1);
+                this.gameManager.updateBoard();
+                this.nextAction=Date.now()+this.actionInterval;
+            }
+            else{
+                this.setAction(action2);
+            }
+        }
+
+        render(this.gameManager,CONFIG);
+    }
+
+    draw(){
+        this.action();
+        if(this.currentAction=="action1"){
+            this.spriteManagers.action1.drawSprite(this.pos.x,this.pos.y);
         }
         else{
-            this.setAction(action2);
+            this.spriteManagers.action2.drawSprite(this.pos.x,this.pos.y);
         }
     }
 
 
+}
+
+class Tom{
+    constructor(config,gameManager){
+        this.config=config;
+        this.gameManager=gameManager;
+        this.spriteManager=new spriteManager(config,"side");
+        this.pos={
+            x:100,
+            y:200,
+        }
+    }
+
+    draw(){
+        this.spriteManager.drawSprite(this.pos.x,this.pos.y);
+    }
 }
 
 
@@ -286,7 +324,8 @@ class GameManager {
             traps:[],
             grandmas:[],
             godzillas:[],
-            bartsimpsons:[]
+            bartsimpsons:[],
+            dogs:[]
         };
 
         this.clickArea = {
@@ -300,6 +339,7 @@ class GameManager {
             this.objects.jerrys.forEach((jerry)=>{
                 if(jerry.clicked(this.clickArea)){
                     this.score+=jerry.reward;
+                    addLog(`Jerry Has Been Clicked! It was at ${this.clickArea}`);
                     this.updateBoard();
                 }
                 
@@ -387,7 +427,7 @@ function upgradeJerry(gameManager,key){
                 gameManager.updateBoard();
 
             }
-            else{                gameManager.score-=jconfig.upgradeInfo.addAmount.price;
+            else{                
                 CONFIG["Jerry"].upgradeInfo.addAmount.price=Math.floor(jconfig.upgradeInfo.addAmount.priceFactor*jconfig.upgradeInfo.addAmount.price);
                 render(gameManager,CONFIG);
                 gameManager.updateBoard();
@@ -462,6 +502,10 @@ function findUpgradeFunction(type){
             return upgradeGodzilla;
         case "Bart_Simpson":
             return upgradeBartSimpson;
+        case "Dog":
+            return upgradeDog;
+        case "Tom":
+            return upgradeTom;
     }
 }
 
@@ -548,17 +592,26 @@ function upgradeDog(gameManager,key){
         case "Unlock":
             if(gameManager.score>=config.unlockPrice&&config.unlock==false){
                 CONFIG["Dog"].unlock=true;
-                gameManager.objects.dogs.push(new Bartsimpson(CONFIG["Dog"],gameManager));
+                gameManager.objects.dogs.push(new Dog(CONFIG["Dog"],gameManager));
                 gameManager.score-=config.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
             }
             break;
         case "buyBones":
-             if(gameManager.score>=config.consumeBones){
-                
+             if(gameManager.score>=config.upgradeInfo.buyBones.price){
+                gameManager.score-=config.upgradeInfo.buyBones.price;
+                gameManager.objects.dogs[0].totalBone+=config.upgradeInfo.buyBones.amount;
              }
-    }
+        case "upgrade":
+            if(gameManager.score>=config.upgradeInfo.upgrade.price){
+                config.consumeBones=Math.floor(config.consumeBones*(1+config.upgradeInfo.upgrade.ratio));
+                config.gainPoint=Math.floor(config.gainPoint*(1+config.upgradeInfo.upgrade.ratio));
+                config.upgradeInfo.upgrade.price=Math.floor(config.upgradeInfo.upgrade.price*config.upgradeInfo.upgrade.priceFactor);
+                gameManager.objects.dogs=[];
+                gameManager.objects.push(new Dog(config,gameManager));
+            }
+        }
 }
 
 function upgradeBartSimpson(gameManager,key){
@@ -587,4 +640,52 @@ function upgradeBartSimpson(gameManager,key){
             }
             break;
     }
+}
+
+function upgradeTom(gameManager,key){
+    let config=CONFIG["Tom"];
+
+    switch(key){
+        case "Unlock":
+            if(gameManager.score>=config.unlockPrice&&config.unlock==false){
+                CONFIG["Tom"].unlock=true;
+                gameManager.objects.toms.push(new Tom(CONFIG["Tom"],gameManager));
+                gameManager.score-=config.unlockPrice;
+                gameManager.updateBoard();
+                let length=gameManager.objects.jerrys.length;
+                CONFIG["Jerry"].reward+=1;
+                gameManager.objects.jerrys=[];
+                for(let i=0; i<length; i++){
+                    gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+                }
+                
+                render(gameManager,CONFIG);
+
+            }
+            break;
+        case "buyOne":
+            if(gameManager.score>=config.upgradeInfo.buyOne.price){
+                gameManager.score-=config.upgradeInfo.buyOne.price;
+                config.upgradeInfo.buyOne.price= Math.floor(config.upgradeInfo.buyOne.price*config.upgradeInfo.buyOne.priceFactor);
+                gameManager.objects.toms.push(new Tom(CONFIG["Tom"],gameManager));
+                gameManager.updateBoard();
+                let length=gameManager.objects.jerrys.length;
+                CONFIG["Jerry"].reward+=1;
+                gameManager.objects.jerrys=[];
+                for(let i=0; i<length; i++){
+                    gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+                }
+                render(gameManager,CONFIG);
+            }
+            break;
+    }
+}
+
+function addLog(msg){
+    const lp=document.getElementById("log-panel");
+    const newMessage=document.createElement("div");
+    newMessage.textContent=`[${new Date().toLocaleTimeString()}] ${msg}`;
+    lp.appendChild(newMessage);
+
+    lp.scrollTop=lp.scrollHeight;
 }
