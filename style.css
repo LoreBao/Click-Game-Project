@@ -1,210 +1,424 @@
-/* ===== Base: 黑藍科幻皮膚 ===== */
+/* ========== Theme Variables ========== */
 :root{
-  --bg: #0b0f14;          /* 主背景黑 */
-  --panel: #0f172a;       /* 次級深藍灰面板 */
-  --panel-2: #111827;     /* 更深一階 */
-  --text: #e5e7eb;        /* 主要文字 */
-  --text-dim: #9ca3af;    /* 次要文字 */
-  --blue: #3b82f6;        /* 重點藍 */
-  --blue-2: #60a5fa;      /* 次重點藍 */
-  --line: rgba(59,130,246,.35); /* 霓虹邊線 */
-  --glow: 0 0 0.6rem rgba(59,130,246,.35);
+  /* colors */
+  --bg: #0f1a13;
+  --bg-elev: #15241a;
+  --text: #e8f5ec;
+  --muted: #a7c1af;
+  --border: #274434;
+  --accent: #a6f277;    /* lime/leaf */
+  --accent-2: #2e7d32;  /* forest */
+  --success: #8ee08a;
+  --warning: #ffdf6e;
+
+  /* radii & gaps */
   --radius: 14px;
-  --fast: 120ms;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+
+  /* layout */
+  --panel-w: 320px;
+
+  /* shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+  --shadow-md: 0 6px 18px rgba(0,0,0,.28);
+  --shadow-lg: 0 18px 40px rgba(0,0,0,.35);
 }
 
-*{ box-sizing: border-box; }
-html,body{
-  height:100%;
-  margin:0;
-  background: radial-gradient(1200px 1200px at 10% 10%, #0d1320 0%, var(--bg) 35%, #05070b 100%);
+/* ========== Reset & Base ========== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+html:focus-within { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
   color: var(--text);
-  font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  background:
+    radial-gradient(1200px 800px at 10% 10%, rgba(166,242,119,.06), transparent 60%),
+    radial-gradient(900px 600px at 90% 90%, rgba(46,125,50,.18), transparent 60%),
+    var(--bg);
+  font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== 版面：兩個畫布在上，資訊與升級在下（自適應） ===== */
+img, canvas, svg, video { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 { margin: 0 0 var(--gap-md); line-height: 1.25; }
+p { margin: 0 0 var(--gap-sm); color: var(--text); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ========== Common Cards & Utilities ========== */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)) , var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: var(--gap-md);
+  backdrop-filter: saturate(1.1) blur(0px);
+}
+
+.soft-sep{
+  border-top: 1px solid rgba(255,255,255,.06);
+  margin: var(--gap-md) 0;
+}
+
+/* ========== Title ========== */
+#title{
+  grid-area: title;
+  padding: var(--gap-md) var(--gap-lg) var(--gap-sm);
+}
+#title h1{
+  font-size: clamp(22px, 2.2vw, 32px);
+  letter-spacing: .5px;
+  color: var(--text);
+  text-shadow: 0 2px 0 rgba(0,0,0,.25);
+}
+#title span{
+  font-size: 12.5px;
+  color: var(--muted);
+  display: inline-block;
+  margin-top: 4px;
+  opacity: .9;
+}
+
+/* ========== Grid Layout (Progressive Enhancement) ========== */
+/* Default: body 作為版面網格容器 */
 body{
   display: grid;
-  grid-template-columns: 1fr 400px;
-  grid-template-rows: auto auto;
-  gap: 16px;
-  padding: 18px;
-}
-#UI{
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-}
-#side-screen{
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
+  grid-template-areas:
+    "title title title"
+    "meta  main  upgrade"
+    "achv  main  upgrade";
+  grid-template-columns: minmax(240px, var(--panel-w)) 1fr minmax(260px, 28vw);
+  grid-auto-rows: auto;
+  gap: var(--gap-lg);
+  align-items: start; /* 上緣水平對齊 */
+  padding: 0 var(--gap-lg) var(--gap-lg);
 }
 
-/* 小螢幕時堆疊 */
-@media (max-width: 1100px){
-  body{
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-  }
-  #UI, #side-screen{
-    grid-column: 1 / -1;
-  }
+/* 若頁面另有外層容器，亦套用相同網格（不破壞 body 規劃） */
+:is(.app, .root, .page, .container){
+  display: grid;
+  grid-template-areas:
+    "title title title"
+    "meta  main  upgrade"
+    "achv  main  upgrade";
+  grid-template-columns: minmax(240px, var(--panel-w)) 1fr minmax(260px, 28vw);
+  grid-auto-rows: auto;
+  gap: var(--gap-lg);
+  align-items: start;
+  padding: 0 var(--gap-lg) var(--gap-lg);
 }
 
-/* ===== Canvas 外觀 ===== */
-#UI, #side-screen{
-  width: 100%;
-  max-width: 100%;
-  display:block;
-  background:
-    linear-gradient(180deg, rgba(59,130,246,.06), rgba(59,130,246,0) 50%) ,
-    radial-gradient(600px 300px at 80% -20%, rgba(59,130,246,.08), transparent 60%),
-    var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--glow);
+/* ========== Regional Placement ========== */
+:is(#meta-wrap, .meta-wrap, .meta-warp){
+  grid-area: meta;
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: var(--gap-md);
+}
+#achievement-panel,
+.achievement-panel{
+  grid-area: achv;
+}
+#game-wrap, .game-wrap{
+  grid-area: main;
+}
+#UpgradeTable,
+.upgrade-panel{
+  grid-area: upgrade;
 }
 
-/* ===== 右側／下方資訊區 ===== */
-#meta-wrap, #game-log, #UpgradeTable{
-  background: linear-gradient(180deg, rgba(17,24,39,.7), rgba(15,23,42,.9));
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--glow);
-  padding: 14px;
-}
-
-/* 讓分區落位 */
-#meta-wrap{
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
+/* ========== game-wrap：主畫面置中 + side 於下方 ========== */
+:is(#game-wrap, .game-wrap){
   display: flex;
-  gap: 12px;
-  align-items: center;
+  flex-direction: column;
+  align-items: center;         /* main screen 置中 */
   justify-content: flex-start;
+  gap: var(--gap-md);
 }
-#meta-wrap p{
-  margin: 0;
-  padding: 8px 12px;
-  background: var(--panel-2);
-  color: var(--text);
-  border: 1px solid rgba(59,130,246,.25);
-  border-radius: 10px;
-  text-shadow: 0 0 .4rem rgba(59,130,246,.2);
+:is(#UI, .main-screen, [data-role="main-screen"]){
+  width: min(100%, 800px);
+  height: auto;
+  border-radius: calc(var(--radius) - 4px);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  background: #0a1410;
+}
+:is(#side-screen, .side-screen, [data-role="side-screen"]){
+  width: min(100%, 800px);     /* side screen 在主畫面下方且等寬 */
+  height: auto;
+  border-radius: calc(var(--radius) - 4px);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  background: #0c1812;
 }
 
-#game-log{
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  display: grid;
-  grid-template-rows: auto 1fr;
+/* ========== 左側欄：Score（與 main 上緣齊平） ========== */
+:is(#meta-wrap, .meta-wrap, .meta-warp) .card { margin: 0; }
+:is(#score, .score, [data-role="score"]){
+  display: inline-flex;
+  align-items: baseline;
   gap: 10px;
-  min-height: 140px;
-}
-#game-log h2{
-  margin: 0;
-  font-size: 16px;
-  letter-spacing: .3px;
-  color: var(--blue-2);
-  text-shadow: var(--glow);
-}
-#log-panel{
-  background: #0a0f1a;
-  border: 1px dashed rgba(59,130,246,.35);
-  border-radius: 10px;
-  padding: 10px;
-  height: 180px;
-  overflow: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--blue) transparent;
-}
-#log-panel::-webkit-scrollbar{ height:10px; width:10px; }
-#log-panel::-webkit-scrollbar-thumb{ background: linear-gradient(var(--blue), var(--blue-2)); border-radius: 8px; }
-
-/* ===== 升級面板 ===== */
-#UpgradeTable{
-  grid-column: 1 / -1;
-  grid-row: 3 / 4;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-}
-
-.character-panel{
-  background: linear-gradient(180deg, rgba(30,58,138,.25), rgba(17,24,39,.9));
-  border: 1px solid var(--line);
+  padding: 14px 16px;
   border-radius: var(--radius);
-  padding: 12px;
-  transition: transform var(--fast) ease, box-shadow var(--fast) ease, border-color var(--fast) ease;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(166,242,119,.12), rgba(166,242,119,.04)) , var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 28px);
+  color: var(--accent);
+}
+#clickstate{
+  color: var(--muted);
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+/* ========== Achievements（位於 meta 下方、仍在左側） ========== */
+#achievement-panel,
+.achievement-panel{
+  padding: var(--gap-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)) , var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+  min-height: 120px;
+}
+#achievement-panel h2,
+.achievement-panel h2{
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: var(--gap-sm);
+}
+#achievement-list{
+  display: grid;
+  gap: 8px;
+  max-height: 40vh;
+  overflow: auto;
+  padding-right: 4px;
+}
+#achievement-list > div{
+  padding: 10px 12px;
+  border: 1px dashed rgba(255,255,255,.08);
+  border-radius: calc(var(--radius) - 6px);
+  background: rgba(255,255,255,.02);
+  color: var(--muted);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+
+/* 解鎖（JS 會把 color 設成 lime）：顯示 pop-in + shimmer + 柔光 */
+#achievement-list > div[style*="lime"]{
+  color: var(--success) !important;
+  border-color: rgba(166,242,119,.35);
+  background:
+    linear-gradient(90deg, rgba(166,242,119,.06), rgba(255,255,255,.03) 35%, rgba(166,242,119,.06) 70%) ,
+    rgba(166,242,119,.05);
+  box-shadow: 0 0 0 1px rgba(166,242,119,.35), 0 6px 18px rgba(166,242,119,.18);
+  animation: pop-in .36s cubic-bezier(.2,.8,.2,1), shimmer 2.2s linear infinite;
+}
+
+/* 未解鎖（JS 會把 color 設成 red） */
+#achievement-list > div[style*="red"]{
+  opacity: .75;
+  filter: saturate(.85);
+}
+
+/* ========== Upgrade 右側欄（與 main 上緣齊平） ========== */
+#UpgradeTable,
+.upgrade-panel{
+  padding: var(--gap-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)) , var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: var(--gap-md);
+  align-self: start;
+}
+.character-panel{
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: calc(var(--radius) - 6px);
+  padding: var(--gap-md);
+  background: rgba(255,255,255,.02);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .character-panel:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(59,130,246,.22);
-  border-color: rgba(96,165,250,.55);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(166,242,119,.35);
 }
 .character-panel h3{
-  margin: 0 0 8px;
-  font-weight: 700;
-  color: var(--blue-2);
-  text-shadow: 0 0 .5rem rgba(96,165,250,.35);
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: var(--text);
 }
-
-/* 升級條目 */
 .character-panel ul{
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   display: grid;
   gap: 8px;
 }
 .character-panel li{
   display: grid;
-  gap: 8px;
-  background: rgba(3,7,18,.35);
-  border: 1px solid rgba(59,130,246,.25);
+  gap: 6px;
+  padding: 8px 10px;
   border-radius: 10px;
-  padding: 10px;
-  color: var(--text-dim);
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
 }
-
-/* 按鈕：藍色螢光 */
-button{
+.character-panel button{
   appearance: none;
-  border: 1px solid rgba(96,165,250,.55);
-  background: linear-gradient(180deg, rgba(59,130,246,.25), rgba(37,99,235,.35));
-  color: #eaf2ff;
-  font-weight: 600;
-  letter-spacing: .3px;
-  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(166,242,119,.18), rgba(46,125,50,.22));
+  color: #07230f;
+  font-weight: 700;
+  letter-spacing: .2px;
+  padding: 8px 10px;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform var(--fast) ease, box-shadow var(--fast) ease, border-color var(--fast) ease, background var(--fast) ease;
-  box-shadow: 0 0 .45rem rgba(59,130,246,.35), inset 0 0 .45rem rgba(59,130,246,.15);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 10px rgba(0,0,0,.25);
+  transition: transform .06s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
 }
-button:hover{
+.character-panel button:hover{
   transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(96,165,250,.35), rgba(37,99,235,.5));
-  border-color: rgba(147,197,253,.8);
-  box-shadow: 0 0 .7rem rgba(96,165,250,.55), inset 0 0 .6rem rgba(59,130,246,.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 20px rgba(0,0,0,.35);
+  border-color: rgba(166,242,119,.55);
 }
-button:active{
+.character-panel button:active{
   transform: translateY(0);
-  box-shadow: 0 0 .3rem rgba(59,130,246,.4) inset;
+}
+.character-panel button:focus-visible{
+  outline: 3px solid rgba(166,242,119,.65);
+  outline-offset: 2px;
 }
 
-/* ===== 小細節 ===== */
-#score{
-  font-size: 20px;
-  font-weight: 800;
-  color: #cbe1ff;
+/* ========== 右下角固定：Game Log（不遮擋主要互動） ========== */
+:is(#game-log, .game-log, [data-role="game-log"]){
+  position: fixed;
+  right: var(--gap-lg);
+  bottom: var(--gap-lg);
+  width: clamp(260px, 22vw, 380px);
+  max-height: 40vh; /* 規格要求 */
+  overflow: auto;
+  z-index: 50;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: rgba(12, 24, 18, .88);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(6px) saturate(1.1);
+  padding: var(--gap-md);
 }
-#clickstate{
-  color: var(--text-dim);
+:is(#game-log, .game-log) h2{
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+#log-panel{
+  display: grid;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text);
+}
+#log-panel > div{
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
 }
 
-h2, h3 { user-select: none; }
-canvas{ user-select: none; }
+/* ========== Accessibility ========== */
+:focus-visible{
+  outline: 3px solid rgba(166,242,119,.7);
+  outline-offset: 2px;
+}
+[role="button"], button { cursor: pointer; }
+[disabled], .is-locked { cursor: not-allowed; opacity: .6; }
 
-/* 暗色系統偏好優化（可略） */
-@media (prefers-color-scheme: dark){
-  :root{ --bg:#080c12; }
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ========== Animations ========== */
+@keyframes pop-in{
+  0%{ transform: scale(.92); opacity: 0; filter: blur(2px); }
+  60%{ transform: scale(1.02); opacity: 1; filter: blur(0); }
+  100%{ transform: scale(1); }
+}
+@keyframes shimmer{
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+#achievement-list > div[style*="lime"]{
+  background-size: 200% 100%;
+}
+
+/* ========== Responsive ========== */
+/* 768–1199px：upgrade 跌落 main 下方；side 仍在 main 下方 */
+@media (max-width: 1199px) and (min-width: 768px){
+  body,
+  :is(.app, .root, .page, .container){
+    grid-template-areas:
+      "title title"
+      "meta  main"
+      "achv  main"
+      ".     main"
+      "upgrade upgrade"; /* upgrade 跌落並橫跨兩欄 */
+    grid-template-columns: minmax(220px, var(--panel-w)) 1fr;
+  }
+}
+
+/* <768px：縱向堆疊：score → achievement → main → side → upgrade；log 縮小 */
+@media (max-width: 767.98px){
+  body,
+  :is(.app, .root, .page, .container){
+    grid-template-areas:
+      "title"
+      "meta"
+      "achv"
+      "main"
+      "upgrade";
+    grid-template-columns: 1fr;
+    gap: var(--gap-md);
+    padding: 0 var(--gap-md) var(--gap-md);
+  }
+
+  :is(#game-log, .game-log){
+    right: var(--gap-md);
+    bottom: var(--gap-md);
+    width: clamp(220px, 60vw, 320px);
+    max-height: 32vh; /* 更不遮擋主要互動 */
+    font-size: 12px;
+  }
+
+  :is(#UI, .main-screen, [data-role="main-screen"]),
+  :is(#side-screen, .side-screen, [data-role="side-screen"]){
+    width: 100%;
+  }
+}
+
+/* ========== Nice-to-have Scrollbar (WebKit) ========== */
+#achievement-list::-webkit-scrollbar,
+#log-panel::-webkit-scrollbar{
+  width: 10px;
+}
+#achievement-list::-webkit-scrollbar-track,
+#log-panel::-webkit-scrollbar-track{
+  background: rgba(255,255,255,.04);
+  border-radius: 999px;
+}
+#achievement-list::-webkit-scrollbar-thumb,
+#log-panel::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg, rgba(166,242,119,.5), rgba(46,125,50,.6));
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,.25);
 }
