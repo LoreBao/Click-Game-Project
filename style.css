@@ -1,0 +1,210 @@
+/* ===== Base: 黑藍科幻皮膚 ===== */
+:root{
+  --bg: #0b0f14;          /* 主背景黑 */
+  --panel: #0f172a;       /* 次級深藍灰面板 */
+  --panel-2: #111827;     /* 更深一階 */
+  --text: #e5e7eb;        /* 主要文字 */
+  --text-dim: #9ca3af;    /* 次要文字 */
+  --blue: #3b82f6;        /* 重點藍 */
+  --blue-2: #60a5fa;      /* 次重點藍 */
+  --line: rgba(59,130,246,.35); /* 霓虹邊線 */
+  --glow: 0 0 0.6rem rgba(59,130,246,.35);
+  --radius: 14px;
+  --fast: 120ms;
+}
+
+*{ box-sizing: border-box; }
+html,body{
+  height:100%;
+  margin:0;
+  background: radial-gradient(1200px 1200px at 10% 10%, #0d1320 0%, var(--bg) 35%, #05070b 100%);
+  color: var(--text);
+  font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+/* ===== 版面：兩個畫布在上，資訊與升級在下（自適應） ===== */
+body{
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  padding: 18px;
+}
+#UI{
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+#side-screen{
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+/* 小螢幕時堆疊 */
+@media (max-width: 1100px){
+  body{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  #UI, #side-screen{
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== Canvas 外觀 ===== */
+#UI, #side-screen{
+  width: 100%;
+  max-width: 100%;
+  display:block;
+  background:
+    linear-gradient(180deg, rgba(59,130,246,.06), rgba(59,130,246,0) 50%) ,
+    radial-gradient(600px 300px at 80% -20%, rgba(59,130,246,.08), transparent 60%),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--glow);
+}
+
+/* ===== 右側／下方資訊區 ===== */
+#meta-wrap, #game-log, #UpgradeTable{
+  background: linear-gradient(180deg, rgba(17,24,39,.7), rgba(15,23,42,.9));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--glow);
+  padding: 14px;
+}
+
+/* 讓分區落位 */
+#meta-wrap{
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+#meta-wrap p{
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid rgba(59,130,246,.25);
+  border-radius: 10px;
+  text-shadow: 0 0 .4rem rgba(59,130,246,.2);
+}
+
+#game-log{
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  min-height: 140px;
+}
+#game-log h2{
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: .3px;
+  color: var(--blue-2);
+  text-shadow: var(--glow);
+}
+#log-panel{
+  background: #0a0f1a;
+  border: 1px dashed rgba(59,130,246,.35);
+  border-radius: 10px;
+  padding: 10px;
+  height: 180px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blue) transparent;
+}
+#log-panel::-webkit-scrollbar{ height:10px; width:10px; }
+#log-panel::-webkit-scrollbar-thumb{ background: linear-gradient(var(--blue), var(--blue-2)); border-radius: 8px; }
+
+/* ===== 升級面板 ===== */
+#UpgradeTable{
+  grid-column: 1 / -1;
+  grid-row: 3 / 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.character-panel{
+  background: linear-gradient(180deg, rgba(30,58,138,.25), rgba(17,24,39,.9));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  transition: transform var(--fast) ease, box-shadow var(--fast) ease, border-color var(--fast) ease;
+}
+.character-panel:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(59,130,246,.22);
+  border-color: rgba(96,165,250,.55);
+}
+.character-panel h3{
+  margin: 0 0 8px;
+  font-weight: 700;
+  color: var(--blue-2);
+  text-shadow: 0 0 .5rem rgba(96,165,250,.35);
+}
+
+/* 升級條目 */
+.character-panel ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.character-panel li{
+  display: grid;
+  gap: 8px;
+  background: rgba(3,7,18,.35);
+  border: 1px solid rgba(59,130,246,.25);
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--text-dim);
+}
+
+/* 按鈕：藍色螢光 */
+button{
+  appearance: none;
+  border: 1px solid rgba(96,165,250,.55);
+  background: linear-gradient(180deg, rgba(59,130,246,.25), rgba(37,99,235,.35));
+  color: #eaf2ff;
+  font-weight: 600;
+  letter-spacing: .3px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform var(--fast) ease, box-shadow var(--fast) ease, border-color var(--fast) ease, background var(--fast) ease;
+  box-shadow: 0 0 .45rem rgba(59,130,246,.35), inset 0 0 .45rem rgba(59,130,246,.15);
+}
+button:hover{
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(96,165,250,.35), rgba(37,99,235,.5));
+  border-color: rgba(147,197,253,.8);
+  box-shadow: 0 0 .7rem rgba(96,165,250,.55), inset 0 0 .6rem rgba(59,130,246,.25);
+}
+button:active{
+  transform: translateY(0);
+  box-shadow: 0 0 .3rem rgba(59,130,246,.4) inset;
+}
+
+/* ===== 小細節 ===== */
+#score{
+  font-size: 20px;
+  font-weight: 800;
+  color: #cbe1ff;
+}
+#clickstate{
+  color: var(--text-dim);
+}
+
+h2, h3 { user-select: none; }
+canvas{ user-select: none; }
+
+/* 暗色系統偏好優化（可略） */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#080c12; }
+}
