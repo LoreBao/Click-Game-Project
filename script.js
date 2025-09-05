@@ -18,20 +18,111 @@ const IMG_HEIGHT = 150;
 
 let CONFIG = {};
 
+//-0-0-0 Achievement setting -0-0-0 
+let GAMESTARTTIME=null;
+let ACHIEVEMENTS=[
+    {
+        title:"Points Master I:One Thousand Points!",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.score>1000;
+        }
+    },
+
+    {
+        title:"Points Master II:Ten Thousand Points!",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.score>10000;
+        }
+    },
+
+    {
+        title:"Points Champion: One Million Points!",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.score>1000000;
+        }
+    },
+
+    {
+        title:"Jackpot: 777",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.score===777;
+        }
+    },
+
+
+    {
+        title:"Tom and Jerry: Unlock both Jerry and Tom",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.objects.toms.length>0;
+        }
+    },
+
+    {
+        title:"Absolute Dedication: Complete all previous achievements",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            ACHIEVEMENTS.forEach((e)=>{
+                if(!e.achieved){
+                    return false;
+                }
+            })
+
+            return true;
+        }
+    },
+    
+];
+
+
+
 (async function () {
     const configData = await fetch("static/config.json").then(r => r.json());
     CONFIG = Object.fromEntries(configData.map(function (value) {
         const img = new Image();
         img.src = "static/" + value.img;
+
+        if(value.action1){
+            value.action1.img=img;
+        }
+
+        if(value.action2){
+            value.action2.img=img;
+        }
+
+        
         return [value.type, { ...value, img }];
     }));
+
+    await Promise.all(Object.values(CONFIG).map(c => {
+    return new Promise(resolve => {
+        if (!c.img) return resolve();
+        if (c.img.complete) return resolve();
+        c.img.onload = () => resolve();
+        c.img.onerror = () => resolve(); // 失敗也繼續
+    });
+    }));
+
     addLog("Game has Started!");
+    GAMESTARTTIME=Date.now();
+    renderAchievements();
     startGame();
 })();
 
 class BasicWeapons {
     constructor(config,gameManager) {
         this.cfg=config;
+        this.type=config.type;
         this.image = config.img;
         this.width=config.width;
         this.height=config.height;
@@ -91,7 +182,6 @@ class BasicWeapons {
 
         if(Date.now()<=this.visibleUntil){
             this.spritemanager.drawSprite(this.pos.x,this.pos.y);
-            console.log(`Draw: ${this.cfg.type} success!`);  
         }
         else{
             if(this._pendingPos){
@@ -104,6 +194,7 @@ class BasicWeapons {
 
 class BasicJerrys {
     constructor(config) {
+        this.type=config.type;
         this.image = config.img; //img:"image path"//
         this.width = config.width;
         this.height = config.height; 
@@ -147,6 +238,7 @@ class BasicJerrys {
 class Trap extends BasicJerrys{
     constructor(config) {
         super(config);
+
     }
 }
 
@@ -202,7 +294,7 @@ class Godzilla extends BasicWeapons{
         this.limit=config.limit;
         this.valid=true;
         
-        if(this.rangew>=WIDTH){
+        if(this.rangew!=WIDTH){
             this.rangew=WIDTH;
         }
     }
@@ -242,15 +334,16 @@ class Dog{
         this.actionInterval=cfg.actionInterval;
         this.gainPoint=cfg.gainPoint;
         this.totalBones=0;
-        this.currentAction=cfg.currentAction;
+        this.currentAction="action2";
+        this.consumeBones=cfg.consumeBones;
         this.nextAction=Date.now()+this.actionInterval;
         this.spriteManagers={
             "action1":new SpriteManager(cfg.action1,"side"),
             "action2":new SpriteManager(cfg.action2,"side")
         }
         this.pos={
-            x:100,
-            y:100
+            x:sideCanvas.width/2,
+            y:sideCanvas.height/2
         }
     }
 
@@ -258,13 +351,13 @@ class Dog{
         if(name=="action1"){
             this.currentAction="action1";
             this.spriteManagers.action1.frameIndex=0;
-            this.spriteManagers.action1.nextframe=Date.now()+frameDuration;
+            this.spriteManagers.action1.nextframe=Date.now()+this.spriteManagers.action1.frameDuration;
         }
 
         else{
             this.currentAction="action2";
             this.spriteManagers.action2.frameIndex=0;
-            this.spriteManagers.action2.nextframe=Date.now()+frameDuration;
+            this.spriteManagers.action2.nextframe=Date.now()+this.spriteManagers.action2.frameDuration;
         }
     }
 
@@ -273,16 +366,16 @@ class Dog{
             if(this.cfg.consumeBones<=this.totalBones){
                 this.totalBones-=this.cfg.consumeBones;
                 this.gameManager.score+=this.gainPoint*this.consumeBones;
-                this.setAction(action1);
+                this.setAction("action1");
                 this.gameManager.updateBoard();
-                this.nextAction=Date.now()+this.actionInterval;
             }
             else{
-                this.setAction(action2);
+                this.setAction("action2");
+                
             }
+            this.nextAction=Date.now()+this.actionInterval;
         }
 
-        render(this.gameManager,CONFIG);
     }
 
     draw(){
@@ -301,11 +394,13 @@ class Dog{
 class Tom{
     constructor(config,gameManager){
         this.config=config;
+        this.type=config.type;
         this.gameManager=gameManager;
-        this.spriteManager=new spriteManager(config,"side");
+        this.spriteManager=new SpriteManager(config,"side");
+        this.id=gameManager.objects.toms.length;
         this.pos={
-            x:100,
-            y:200,
+            x:this.id*IMG_WIDTH,
+            y:0,
         }
     }
 
@@ -359,7 +454,7 @@ class GameManager {
 
         this.gameLoop=()=>{
             ctx.clearRect(0,0,WIDTH,HEIGHT);
-           
+            sideCtx.clearRect(0,0,sideCanvas.width,sideCanvas.height);
             Object.entries(this.objects).forEach(([key,arr])=>{
                 arr.forEach((e)=>{
                     e.draw();
@@ -393,12 +488,8 @@ class GameManager {
 
     updateBoard(){
         const scoreboard=document.getElementById("score");
-        const clickstate=document.getElementById("clickstate");
-
         scoreboard.textContent=this.score;
-        clickstate.textContent=`You have Clicked A Jerry! Jerry is at: (${this.clickArea.x.toFixed(0)},${this.clickArea.y.toFixed(0)})`;
-
-
+        updateachivementpanel(this);
     }
 }
 
@@ -414,7 +505,7 @@ function upgradeJerry(gameManager,key){
     switch(key){
         case "addAmount":
             if(gameManager.score>=jconfig.upgradeInfo.addAmount.price){
-                if(Math.random()<=1){
+                if(Math.random()<=0.25){
                     gameManager.objects.traps.push(new Trap(CONFIG["Trap"]));
                 }
                 else{
@@ -427,12 +518,6 @@ function upgradeJerry(gameManager,key){
                 gameManager.updateBoard();
 
             }
-            else{                
-                CONFIG["Jerry"].upgradeInfo.addAmount.price=Math.floor(jconfig.upgradeInfo.addAmount.priceFactor*jconfig.upgradeInfo.addAmount.price);
-                render(gameManager,CONFIG);
-                gameManager.updateBoard();
-                alert("No Money , Poor! -Jerry ")
-            }
             break;
     }
 
@@ -442,6 +527,9 @@ function render(gameManager,config){
     const upgradeContainer=document.getElementById("UpgradeTable");
     upgradeContainer.innerHTML="";
     Object.entries(config).forEach(([type,info])=>{ //type: "Jerry", info :{"type":"Jerry","width":100..etc}
+        if(type==="Trap"){
+            return;
+        }
         const div=document.createElement("div");
         div.id=type;
         div.classList.add("character-panel");
@@ -470,14 +558,20 @@ function render(gameManager,config){
                 ul.appendChild(li);
                 
             })
+            if(type==="Dog"){
+                const infoli=document.createElement("li");
+                const doginfo=gameManager.objects.dogs[0];
+                infoli.textContent=`Total Bones:${doginfo.totalBones}, Consumes: ${doginfo.consumeBones} Bones per ${doginfo.actionInterval}`;
+                div.appendChild(infoli);
+            }
             div.appendChild(ul);
+        
         }
         else{
             // Lock //
             const lockBtn=document.createElement("button");
             lockBtn.textContent="Unlock";
             lockBtn.addEventListener("click",(e)=>{
-                console.log("Trigger Unlock");
                 const targetFunction=findUpgradeFunction(type);
                 if(targetFunction){
 
@@ -601,16 +695,27 @@ function upgradeDog(gameManager,key){
         case "buyBones":
              if(gameManager.score>=config.upgradeInfo.buyBones.price){
                 gameManager.score-=config.upgradeInfo.buyBones.price;
-                gameManager.objects.dogs[0].totalBone+=config.upgradeInfo.buyBones.amount;
+                gameManager.objects.dogs[0].totalBones+=config.upgradeInfo.buyBones.amount;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
              }
+             break;
         case "upgrade":
             if(gameManager.score>=config.upgradeInfo.upgrade.price){
                 config.consumeBones=Math.floor(config.consumeBones*(1+config.upgradeInfo.upgrade.ratio));
                 config.gainPoint=Math.floor(config.gainPoint*(1+config.upgradeInfo.upgrade.ratio));
                 config.upgradeInfo.upgrade.price=Math.floor(config.upgradeInfo.upgrade.price*config.upgradeInfo.upgrade.priceFactor);
+                config.actionInterval=Math.floor(config.actionInterval*(1-config.upgradeInfo.upgrade.ratio));
+                gameManager.score-=config.upgradeInfo.upgrade.price;
+                config.upgradeInfo.upgrade.price=Math.floor(config.upgradeInfo.upgrade.price*config.upgradeInfo.upgrade.priceFactor);
+                const theBones=gameManager.objects.dogs[0].totalBones;
                 gameManager.objects.dogs=[];
-                gameManager.objects.push(new Dog(config,gameManager));
+                gameManager.objects.dogs.push(new Dog(config,gameManager));
+                gameManager.objects.dogs[0].totalBones=theBones;
+                gameManager.updateBoard();
+                render(gameManager,CONFIG);
             }
+            break;
         }
 }
 
@@ -689,3 +794,37 @@ function addLog(msg){
 
     lp.scrollTop=lp.scrollHeight;
 }
+
+// 0-0-0-Achievement  Function-0-0-0
+
+function renderAchievements(){
+    const achievementList=document.getElementById("achievement-list");
+    achievementList.innerHTML="";
+    ACHIEVEMENTS.forEach((e)=>{
+        const status=document.createElement("div");
+        if(e.achieved){
+            const totalms=e.achieveTime-GAMESTARTTIME;
+            const totalsec=Math.floor(totalms/1000);
+            const totalmin=Math.floor(totalsec/60);
+            status.textContent=`${e.title}: Completed in under ${totalmin} mins ${totalsec-totalmin*60} secs `;
+            status.style.color="lime";
+        }
+        else{
+            status.textContent=`${e.title}: incomplete`;
+            status.style.color="red";
+        }
+        achievementList.appendChild(status);
+    })
+}
+
+function updateachivementpanel(gameManager){
+    ACHIEVEMENTS.forEach((e)=>{
+        if(e.condition(gameManager)){
+            e.achieveTime=Date.now();
+            e.achieved=true;
+            addLog(`${e.title}, Completed!`);
+        }
+    })
+    renderAchievements();
+}
+

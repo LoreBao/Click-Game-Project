@@ -3,7 +3,7 @@
         "type": "Jerry",
         "img":"godzilla.png",
         "moveDuration":3000,
-        "reward": 1,
+        "reward": 12222,
         "sx":118,
         "sy":3380,
         "width":100,
@@ -16,8 +16,7 @@
                 "desc":"Increase Your Jerrys, However 25% it will summon a trap!",
                 "price":10,
                 "priceFactor":1.5
-            },
-            "reduceCD":{}
+            }
         }
     },
 
@@ -180,11 +179,6 @@
         "unlock":false,
         "unlockPrice":130,
         "upgradeInfo":{
-            "addAmount":{
-                "desc":" every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.",
-                "price":1300,
-                "priceFactor":2
-            },
             "reduceCD":{
                 "desc":"Reduce CD by 5%/time",
                 "price":2000,
