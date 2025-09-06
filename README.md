@@ -1,4 +1,4 @@
-# Click-Game-Project
+# Tutorial
 Click Game #Jerry
 
 # Game Rules!

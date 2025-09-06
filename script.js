@@ -26,7 +26,7 @@ let ACHIEVEMENTS=[
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>1000;
+            return gameManager.score>=1000;
         }
     },
 
@@ -35,7 +35,7 @@ let ACHIEVEMENTS=[
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>10000;
+            return gameManager.score>=10000;
         }
     },
 
@@ -44,7 +44,7 @@ let ACHIEVEMENTS=[
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>1000000;
+            return gameManager.score>=1000000;
         }
     },
 
@@ -54,6 +54,21 @@ let ACHIEVEMENTS=[
         achieveTime:null,
         condition:(gameManager)=>{
             return gameManager.score===777;
+        }
+    },
+
+    {
+        title:"Encyclopedia: Unlock all Characters",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            const configkeys=Object.keys(CONFIG);
+            for(let i=0; i<configkeys.length; i++){
+                if(!CONFIG[configkeys[i]].unlock){
+                    return false;
+                }
+            }
+            return true;
         }
     },
 
@@ -72,12 +87,11 @@ let ACHIEVEMENTS=[
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            ACHIEVEMENTS.forEach((e)=>{
-                if(!e.achieved){
+            for(let i=0; i<ACHIEVEMENTS.length-1; i++){
+                if(!ACHIEVEMENTS[i].achieved){
                     return false;
                 }
-            })
-
+            }
             return true;
         }
     },
@@ -139,6 +153,14 @@ class BasicWeapons {
     }
 
     randomPos(){
+        if(this.rangew>WIDTH){
+            this.rangew=WIDTH;  
+        }
+        
+        if(this.rangeh>HEIGHT){
+            this.rangeh=HEIGHT;
+        }
+
         let randomX = Math.floor(Math.random() * (WIDTH - this.rangew));
         let randomY = Math.floor(Math.random() * (HEIGHT - this.rangeh));
 
@@ -164,9 +186,13 @@ class BasicWeapons {
 
        this.gameManager.score+=(total*CONFIG["Jerry"].reward);
        this.nextAction=Date.now()+this.cd;
+       addLog(`${this.type}: captured ${total} amount of Jerrys!`);
 
        this.visibleUntil=Date.now()+this.flashDuration;
        this._pendingPos=this.randomPos();
+       if(total>0){
+        this.gameManager.updateBoard();
+       }
        return true;
     }
 
@@ -303,6 +329,7 @@ class Godzilla extends BasicWeapons{
         if(this.valid){
             if(super.action()){
                 this.usedtime++;
+                addLog(`${this.type} can be used for ${this.limit-this.usedtime} times!`);
             }
 
 
@@ -363,14 +390,18 @@ class Dog{
 
     action(){
         if(Date.now()>=this.nextAction){
-            if(this.cfg.consumeBones<=this.totalBones){
-                this.totalBones-=this.cfg.consumeBones;
-                this.gameManager.score+=this.gainPoint*this.consumeBones;
+            if(this.consumeBones<=this.totalBones){
+                this.totalBones-=this.consumeBones;
+                let addPoint = Math.floor(this.gainPoint*this.consumeBones);
+                this.gameManager.score+= addPoint;
                 this.setAction("action1");
                 this.gameManager.updateBoard();
+                render(this.gameManager,CONFIG);
+                addLog(`Dog has eaten ${this.consumeBones} bones and brought ${addPoint} points for you!`);
             }
             else{
                 this.setAction("action2");
+                addLog("Dog is angry and refuse to bring you points! Buy some bones!")
                 
             }
             this.nextAction=Date.now()+this.actionInterval;
@@ -412,7 +443,7 @@ class Tom{
 
 class GameManager {
     constructor() {
-        this.score = 0;
+        this.score = 1000000;
         this.objects = {
             jerrys:[new BasicJerrys(CONFIG["Jerry"])],
             toms:[],
@@ -428,13 +459,13 @@ class GameManager {
             y: 0,
         };
 
-        document.addEventListener("click", (e) => {
+        canvas.addEventListener("click", (e) => {
             this.clickArea=this.clickCoord(e);
             //++---+++---++---++---+ logic +---++---++---++---++---++---++\\
             this.objects.jerrys.forEach((jerry)=>{
                 if(jerry.clicked(this.clickArea)){
                     this.score+=jerry.reward;
-                    addLog(`Jerry Has Been Clicked! It was at ${this.clickArea}`);
+                    addLog(`Jerry Has Been Clicked! It was at (${this.clickArea.x.toFixed(0)},${this.clickArea.y.toFixed(0)})`);
                     this.updateBoard();
                 }
                 
@@ -444,6 +475,7 @@ class GameManager {
                 if(traps.clicked(this.clickArea)){
                     this.score=Math.floor((1+traps.reward/100)*this.score);
                     this.updateBoard();
+                    addLog("Click Jerry, Not Trap!")
                 }
             })
            
@@ -507,9 +539,12 @@ function upgradeJerry(gameManager,key){
             if(gameManager.score>=jconfig.upgradeInfo.addAmount.price){
                 if(Math.random()<=0.25){
                     gameManager.objects.traps.push(new Trap(CONFIG["Trap"]));
+                    CONFIG["Trap"].unlock=true;
+                    addLog("Bad Luck! It's a Trap!");
                 }
                 else{
                     gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
+                    addLog("A Jerry has been Added!");
                 }
 
                 gameManager.score-=jconfig.upgradeInfo.addAmount.price;
@@ -613,6 +648,7 @@ function upgradeGrandma(gameManager,key){
                 gameManager.score-=gconfig.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
+                addLog("Grandma unlocked!");
             }
             break;
         case "reduceCD":
@@ -621,7 +657,7 @@ function upgradeGrandma(gameManager,key){
                 gconfig.upgradeInfo.reduceCD.price=Math.floor(gconfig.upgradeInfo.reduceCD.price*gconfig.upgradeInfo.reduceCD.priceFactor)
                 gconfig.actionInterval=Math.floor(gconfig.actionInterval*0.95);
                 if(gconfig.flashDuration>gconfig.actionInterval){
-                    gconfig.flashDuration=gconfig.actionInterval;
+                    gconfig.flashDuration=gconfig.actionInterval-100;
                 }
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
@@ -632,6 +668,7 @@ function upgradeGrandma(gameManager,key){
                 for(let i=0; i<total; i++){
                     gameManager.objects.grandmas.push(new BasicWeapons(CONFIG["Grandma"],gameManager));
                 }
+                addLog(`Grandma upgraded reduceCD success, current CD is ${(gconfig.actionInterval/1000).toFixed(1)}s`);
             }
             break;
     }
@@ -650,7 +687,7 @@ function upgradeGodzilla(gameManager,key){
                 gameManager.score-=config.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
-
+                addLog(`${config.type} Unlocked Success!`);
             }
             break;
         case "buyOne":
@@ -672,6 +709,7 @@ function upgradeGodzilla(gameManager,key){
                 config.range_h=Math.floor(config.range_h*1.05);
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
+                addLog(`${config.type} increase range success, current range ${config.range_h}px`);
             }
 
             
@@ -690,6 +728,7 @@ function upgradeDog(gameManager,key){
                 gameManager.score-=config.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
+                addLog(`${config.type} Unlock Success!`);
             }
             break;
         case "buyBones":
@@ -702,11 +741,11 @@ function upgradeDog(gameManager,key){
              break;
         case "upgrade":
             if(gameManager.score>=config.upgradeInfo.upgrade.price){
+                gameManager.score-=config.upgradeInfo.upgrade.price;
                 config.consumeBones=Math.floor(config.consumeBones*(1+config.upgradeInfo.upgrade.ratio));
-                config.gainPoint=Math.floor(config.gainPoint*(1+config.upgradeInfo.upgrade.ratio));
+                config.gainPoint=Math.floor(config.gainPoint*(1+config.upgradeInfo.upgrade.ratio+0.2));
                 config.upgradeInfo.upgrade.price=Math.floor(config.upgradeInfo.upgrade.price*config.upgradeInfo.upgrade.priceFactor);
                 config.actionInterval=Math.floor(config.actionInterval*(1-config.upgradeInfo.upgrade.ratio));
-                gameManager.score-=config.upgradeInfo.upgrade.price;
                 config.upgradeInfo.upgrade.price=Math.floor(config.upgradeInfo.upgrade.price*config.upgradeInfo.upgrade.priceFactor);
                 const theBones=gameManager.objects.dogs[0].totalBones;
                 gameManager.objects.dogs=[];
@@ -730,6 +769,7 @@ function upgradeBartSimpson(gameManager,key){
                 gameManager.score-=config.unlockPrice;
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
+                addLog(`${config.type} Unlock Success!`);
             }
             break;
         case "buyOne":
@@ -742,6 +782,7 @@ function upgradeBartSimpson(gameManager,key){
                 gameManager.objects.bartsimpsons.push(new Bartsimpson(CONFIG["Bart_Simpson"],gameManager));
                 gameManager.updateBoard();
                 render(gameManager,CONFIG);
+                addLog(`${config.type} Buy One Success!`);
             }
             break;
     }
@@ -765,6 +806,7 @@ function upgradeTom(gameManager,key){
                 }
                 
                 render(gameManager,CONFIG);
+                addLog(`${config.type} Unlock Success!`);
 
             }
             break;
@@ -775,12 +817,13 @@ function upgradeTom(gameManager,key){
                 gameManager.objects.toms.push(new Tom(CONFIG["Tom"],gameManager));
                 gameManager.updateBoard();
                 let length=gameManager.objects.jerrys.length;
-                CONFIG["Jerry"].reward+=1;
+                CONFIG["Jerry"].reward=Math.floor(CONFIG["Jerry"].reward*(1+config.upgradeInfo.buyOne.rewardFactor));
                 gameManager.objects.jerrys=[];
                 for(let i=0; i<length; i++){
                     gameManager.objects.jerrys.push(new BasicJerrys(CONFIG["Jerry"]));
                 }
                 render(gameManager,CONFIG);
+                addLog(`${config.type} Buy One Success! Current Reward: ${CONFIG["Jerry"].reward}`);
             }
             break;
     }
@@ -819,6 +862,9 @@ function renderAchievements(){
 
 function updateachivementpanel(gameManager){
     ACHIEVEMENTS.forEach((e)=>{
+        if(e.achieved){
+            return;
+        }
         if(e.condition(gameManager)){
             e.achieveTime=Date.now();
             e.achieved=true;

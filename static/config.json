@@ -1,20 +1,20 @@
 [
     {
         "type": "Jerry",
-        "img":"godzilla.png",
+        "img":"jerry.png",
         "moveDuration":3000,
-        "reward": 12222,
-        "sx":118,
-        "sy":3380,
-        "width":100,
-        "height":120,
-        "frameCount" : 3,
-        "frameDuration" :200,
+        "reward": 100,
+        "sx":0,
+        "sy":212,
+        "width":74,
+        "height":74,
+        "frameCount" : 4,
+        "frameDuration" :100,
         "unlock":true,
         "upgradeInfo":{
             "addAmount":{
                 "desc":"Increase Your Jerrys, However 25% it will summon a trap!",
-                "price":10,
+                "price":100,
                 "priceFactor":1.5
             }
         }
@@ -25,27 +25,27 @@
         "img": "trap.png",
         "moveDuration":3000,
         "reward":-50,
-        "sx":530,
-        "sy":290,
-        "width":100,
-        "height":70,
-        "frameCount":3,
+        "sx":0,
+        "sy":0,
+        "width":186,
+        "height":169,
+        "frameCount":4,
         "frameDuration":200,
-        "unlock":true,
+        "unlock":false,
         "upgradeInfo":{
         }
     },
 
     {
         "type": "Bart_Simpson",
-        "img": "simpson.png",
+        "img": "bart.png",
         "sx":0,
-        "sy":260,
-        "range_h":200,
-        "range_w":200,
-        "width":63,
-        "height":90,
-        "frameCount":13,
+        "sy":0,
+        "range_h":800,
+        "range_w":800,
+        "width":413,
+        "height":542,
+        "frameCount":4,
         "frameDuration":200,
         "limit": 2,
         "flashDuration":800,
@@ -54,7 +54,7 @@
         "unlockPrice":800,
         "upgradeInfo":{
             "buyOne":{
-                "desc":"When Bought, Clear all the Jerrys",
+                "desc":"Summon a Bart Simpson and stomp all the Jerrys",
                 "price":3000,
                 "priceFactor":2
             }
@@ -65,10 +65,10 @@
     {
         "type": "Godzilla",
         "img": "godzilla.png",
-        "sx":118,
-        "sy":3380,
-        "width":100,
-        "height":120,
+        "sx":0,
+        "sy":0,
+        "width":438,
+        "height":340,
         "range_h":200,
         "range_w":800,
         "frameCount" : 3,
@@ -77,15 +77,15 @@
         "flashDuration":800,
         "actionInterval":10000,
         "unlock":false,
-        "unlockPrice":499,
+        "unlockPrice":500,
         "upgradeInfo":{
             "buyOne":{
-                "desc":"When Bought, Clear all the Jerrys in a random row",
+                "desc":"Godzilla will blow a beam of fire, incinerate all the jerrys in a row",
                 "price":700,
                 "priceFactor":1.1
             },
             "increaseRange":{
-                "desc":"When Bought, Increases the Range by 5%",
+                "desc":"Godzilla increases his attack range by 5%, becoming more deadly",
                 "price":500,
                 "priceFactor":1.5
             }
@@ -96,18 +96,19 @@
         "type":"Tom",
         "img":"tom.png",
         "sx":0,
-        "sy":197,
-        "width":240,
-        "height":140,
-        "frameCount":4,
+        "sy":0,
+        "width":386,
+        "height":341,
+        "frameCount":3,
         "frameDuration":200,
         "unlock":false,
         "unlockPrice":599,
         "upgradeInfo":{
             "buyOne":{
-                "desc":" Tom will increase your click-power based on how much Toms you own ",
+                "desc":" Tom will increase your Jerry reward, more Tom more efficient!",
                 "price":300,
-                "priceFactor":2
+                "priceFactor":2,
+                "rewardFactor":0.05
             }
         }
 
@@ -116,47 +117,41 @@
     {
         "type":"Dog",
         "img":"dog.png",
-        "sx":35,
-        "sy":280,
-        "width":845,
-        "height":880,
-        "frameCount":3,
-        "frameDuration":200,
         "unlock":false,
         "unlockPrice":199,
         "actionInterval":10000,
         "upgradeInfo":{
             "buyBones":{
-                "desc":"Buy Bones to Feed the Spike!",
+                "desc":"Dog will get some Jerrys if you give him some bones, buy some here!",
                 "price":100,
                 "priceFactor":1,
                 "amount":100
             },
             "upgrade":{
-                "desc":" -time , more points , consume more bones (5 time upgrade=+1 bone)",
+                "desc":"Dog became stronger and will capture more Jerrys for you!",
                 "price":500,
                 "priceFactor":1.5,
                 "ratio":0.1
             }
         },
-        "gainPoint":2,
-        "consumeBones":1,
+        "gainPoint":1.13,
+        "consumeBones":100,
         "action1":{
             "img":null,
             "sx":0,
-            "sy":60,
-            "width":240,
-            "height":240,
-            "frameCount":3,
+            "sy":0,
+            "width":345,
+            "height":427,
+            "frameCount":4,
             "frameDuration":200
         },
         "action2":{
             "img":null,
-            "sx":120,
-            "sy":60,
-            "width":340,
-            "height":250,
-            "frameCount":3,
+            "sx":55,
+            "sy":455,
+            "width":328,
+            "height":451,
+            "frameCount":4,
             "frameDuration":200
         }
         
@@ -165,15 +160,15 @@
     },
     {
         "type":"Grandma",
-        "img":"grandma.png",
-        "sx":35,
-        "sy":770,
-        "width":135,
-        "height":210,
-        "frameCount":7,
-        "frameDuration":200,
-        "range_w":210,
-        "range_h":210,
+        "img":"grandma_new.png",
+        "sx":0,
+        "sy":0,
+        "width":175,
+        "height":237,
+        "frameCount":6,
+        "frameDuration":120,
+        "range_w":200,
+        "range_h":200,
         "actionInterval":1000,
         "flashDuration":800,
         "unlock":false,
