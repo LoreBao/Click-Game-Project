@@ -70,3 +70,17 @@ Click Game #Jerry
     - **Max** : One per time.
 
 
+### Skills
+
+- **Click**
+    Description: a click that would gain points
+- **Roar**
+    Godzilla Roars, Killing all the Jerrys in a row
+- **Stomp**
+    Bart Simpson stomps the map, killing all the Jerrys
+- **Bark**
+    Dog found Jerry and would chase them, unless you feed them bones
+- **Tom's Gift**
+    Tom would Increase how much points per Jerry because he is goated
+- **Grandma Hit**
+    Grandma would hit and maybe kill a Jerry because Grandma can't see well
