@@ -24,7 +24,7 @@
         "type": "Trap",
         "img": "trap.png",
         "moveDuration":3000,
-        "reward":-50,
+        "reward":-60,
         "sx":0,
         "sy":0,
         "width":186,
@@ -49,7 +49,7 @@
         "frameDuration":200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":10000,
+        "actionInterval":20000,
         "unlock":false,
         "unlockPrice":800,
         "upgradeInfo":{
@@ -75,7 +75,7 @@
         "frameDuration" :200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":10000,
+        "actionInterval":15000,
         "unlock":false,
         "unlockPrice":500,
         "upgradeInfo":{
@@ -135,7 +135,7 @@
             }
         },
         "gainPoint":1.13,
-        "consumeBones":100,
+        "consumeBones":200,
         "action1":{
             "img":null,
             "sx":0,
