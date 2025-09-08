@@ -74,15 +74,17 @@ Click Game #Jerry
 
 - **Click**
     Description: a click that would gain points
+![Alt text](jt.png "Optional title")
 - **Roar**
     Godzilla Roars, Killing all the Jerrys in a row
 - **Stomp**
     Bart Simpson stomps the map, killing all the Jerrys
 - **Bark**
     Dog found Jerry and would chase them, unless you feed them bones
+![Alt text](dogt.png "Optional title")
+
 - **Tom's Gift**
     Tom would Increase how much points per Jerry because he is goated
-
 ![Alt text](tomt.png "Optional title")
 
 
