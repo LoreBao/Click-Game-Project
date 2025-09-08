@@ -43,6 +43,8 @@ Click Game #Jerry
 
     - **Max**: Unlimited
 
+    
+
 
 - Spike
 
@@ -56,8 +58,6 @@ Click Game #Jerry
 
 
 - Jerry Upgrade
-
-
     - **Upgradable** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap
     - **Price** : Ascending * 1.5
     - **Max** : Unlimited

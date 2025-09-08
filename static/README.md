@@ -82,5 +82,9 @@ Click Game #Jerry
     Dog found Jerry and would chase them, unless you feed them bones
 - **Tom's Gift**
     Tom would Increase how much points per Jerry because he is goated
+
+![Alt text](tomt.png "Optional title")
+
+
 - **Grandma Hit**
     Grandma would hit and maybe kill a Jerry because Grandma can't see well
