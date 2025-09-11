@@ -90,3 +90,7 @@ In the Game, there are many characters for you. Each having different attributes
     - **Max** : One per time.
 
 
+---
+
+Update History (v2 Tutorial)
+- Created *Tutorial*
