@@ -422,3 +422,64 @@ body{
   border-radius: 999px;
   border: 2px solid rgba(0,0,0,.25);
 }
+
+/* ====== Layout Fix Patch: paste at end of style.css ====== */
+
+/* 1) 防止 Grid 子項撐爆欄寬造成錯位 */
+#title,
+#game-wrap, .game-wrap,
+#meta-wrap, .meta-wrap, .meta-warp,
+#UpgradeTable, .upgrade-panel,
+#achievement-panel, .achievement-panel {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 2) Canvas 初始穩定比例（在 JS 設寬高前避免版面跳動） */
+#UI { aspect-ratio: 1 / 1; }
+#side-screen { aspect-ratio: 8 / 3; }
+
+/* 3) 左右欄吃滿欄位並靠上，避免被內容高度牽動 */
+#meta-wrap, .meta-wrap, .meta-warp,
+#achievement-panel, .achievement-panel,
+#UpgradeTable, .upgrade-panel {
+  width: 100%;
+  justify-self: stretch;
+  align-self: start;
+}
+
+/* 4) 文字溢出保護，避免把卡片撐寬導致整欄位移 */
+.character-panel li,
+#achievement-list > div,
+#log-panel > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 5) （可選）固定的 Game Log 減少對 canvas 點擊干擾 */
+#game-log { pointer-events: none; }
+#game-log * { pointer-events: auto; }
+
+/* 6) 分數區不換行，避免寬度跳動推擠旁邊元素 */
+:is(#score, .score, [data-role="score"]) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 7) 中等寬度時，主區塊允許壓縮而不撐爆欄位 */
+@media (max-width: 1199px) and (min-width: 768px){
+  #game-wrap, .game-wrap { min-width: 0; }
+}
+
+/* 8) 小螢幕時，卡片內文允許換行避免水平捲動 */
+@media (max-width: 767.98px){
+  .character-panel li,
+  #achievement-list > div,
+  #log-panel > div {
+    white-space: normal;
+    word-break: break-word;
+  }
+}
