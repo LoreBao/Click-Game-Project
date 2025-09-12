@@ -434,7 +434,7 @@ class Tom{
 
 class GameManager {
     constructor() {
-        this.score = 1000000;
+        this.score = 1;
         this.objects = {
             jerrys:[new BasicJerrys(CONFIG["Jerry"])],
             toms:[],

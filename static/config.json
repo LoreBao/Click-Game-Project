@@ -3,7 +3,7 @@
         "type": "Jerry",
         "img":"jerry.png",
         "moveDuration":3000,
-        "reward": 100,
+        "reward":1,
         "sx":0,
         "sy":212,
         "width":74,
