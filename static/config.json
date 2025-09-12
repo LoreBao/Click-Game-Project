@@ -51,7 +51,7 @@
         "flashDuration":800,
         "actionInterval":20000,
         "unlock":false,
-        "unlockPrice":800,
+        "unlockPrice":5000,
         "upgradeInfo":{
             "buyOne":{
                 "desc":"Summon a Bart Simpson and stomp all the Jerrys",
@@ -77,7 +77,7 @@
         "flashDuration":800,
         "actionInterval":15000,
         "unlock":false,
-        "unlockPrice":500,
+        "unlockPrice":3500,
         "upgradeInfo":{
             "buyOne":{
                 "desc":"Godzilla will blow a beam of fire, incinerate all the jerrys in a row",
@@ -107,7 +107,7 @@
             "buyOne":{
                 "desc":" Tom will increase your Jerry reward, more Tom more efficient!",
                 "price":300,
-                "priceFactor":2,
+                "priceFactor":1.8,
                 "rewardFactor":0.05
             }
         }
@@ -118,7 +118,7 @@
         "type":"Dog",
         "img":"dog.png",
         "unlock":false,
-        "unlockPrice":199,
+        "unlockPrice":400,
         "actionInterval":10000,
         "upgradeInfo":{
             "buyBones":{
@@ -172,7 +172,7 @@
         "actionInterval":1000,
         "flashDuration":800,
         "unlock":false,
-        "unlockPrice":130,
+        "unlockPrice":1300,
         "upgradeInfo":{
             "reduceCD":{
                 "desc":"Reduce CD by 5%/time",
