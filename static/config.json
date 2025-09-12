@@ -49,7 +49,7 @@
         "frameDuration":200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":20000,
+        "actionInterval":23000,
         "unlock":false,
         "unlockPrice":5000,
         "upgradeInfo":{
@@ -75,7 +75,7 @@
         "frameDuration" :200,
         "limit": 2,
         "flashDuration":800,
-        "actionInterval":15000,
+        "actionInterval":21000,
         "unlock":false,
         "unlockPrice":3500,
         "upgradeInfo":{
