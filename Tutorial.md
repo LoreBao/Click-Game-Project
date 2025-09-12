@@ -1,6 +1,8 @@
 # Game Tutorial: Click a Jerry
 Genre: Clicker Game, Simulation
 
+Welcome to **Click a Jerry!** 
+
 # Clicking a Jerry
 Clicking a Jerry results in you gaining points
 ![Jerryexample](jt.png)

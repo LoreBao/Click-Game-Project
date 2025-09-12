@@ -22,25 +22,7 @@ let CONFIG = {};
 let GAMESTARTTIME=null;
 let ACHIEVEMENTS=[
     {
-        title:"Points Master I:One Thousand Points!",
-        achieved:false,
-        achieveTime:null,
-        condition:(gameManager)=>{
-            return gameManager.score>=1000;
-        }
-    },
-
-    {
-        title:"Points Master II:Ten Thousand Points!",
-        achieved:false,
-        achieveTime:null,
-        condition:(gameManager)=>{
-            return gameManager.score>=10000;
-        }
-    },
-
-    {
-        title:"Points Champion: One Million Points!",
+        title:"Points Master I:One Million Points!",
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
@@ -49,11 +31,20 @@ let ACHIEVEMENTS=[
     },
 
     {
-        title:"Jackpot: 777",
+        title:"Points Master II:Ten Million Points!",
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score===777;
+            return gameManager.score>=10000000;
+        }
+    },
+
+    {
+        title:"Points Champion: One Billion Points!",
+        achieved:false,
+        achieveTime:null,
+        condition:(gameManager)=>{
+            return gameManager.score>=100000000;
         }
     },
 
