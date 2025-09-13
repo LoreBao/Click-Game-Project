@@ -1,9 +1,20 @@
 [
     {
+        "type":"Audio",
+        "bark":{
+            "url":"bark.mp3",
+            "minGap":300
+        },
+        "scream":{
+            "url":"scream.mp3",
+            "minGap":800
+        }
+    },
+    {
         "type": "Jerry",
         "img":"jerry.png",
         "moveDuration":3000,
-        "reward":1,
+        "reward":50,
         "sx":0,
         "sy":212,
         "width":74,

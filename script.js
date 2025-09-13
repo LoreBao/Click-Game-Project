@@ -22,29 +22,29 @@ let CONFIG = {};
 let GAMESTARTTIME=null;
 let ACHIEVEMENTS=[
     {
-        title:"Points Master I:One Million Points!",
+        title:"Points Master I:100k Points!",
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>=1000000;
+            return gameManager.score>=100000;
         }
     },
 
     {
-        title:"Points Master II:Ten Million Points!",
+        title:"Points Master II:200k Points!",
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>=10000000;
+            return gameManager.score>=200000;
         }
     },
 
     {
-        title:"Points Champion: One Billion Points!",
+        title:"Points Champion: 500k Points!",
         achieved:false,
         achieveTime:null,
         condition:(gameManager)=>{
-            return gameManager.score>=100000000;
+            return gameManager.score>=5000000;
         }
     },
 
@@ -89,6 +89,44 @@ let ACHIEVEMENTS=[
     
 ];
 
+// ===Added Audio Manager=== //
+class AudioManager{
+    constructor(cfg){
+        this.cfg=cfg;
+        this.buffer={};
+        this.minGap={};
+        this.lastPlay={};
+        this.unlock=false;
+        this.ctx=null;
+    }
+
+    async init(){
+        if(this.unlock){
+            return;
+        }
+        
+        this.unlock=true;
+        this.ctx= new (window.AudioContext|| window.webkitAudioContext)();
+        await this.ctx.resume();
+        addLog("Audio Initialization Successful");
+    }
+
+    async load(){
+        // cfg : {"type":"Audio", "bark":{"url":"...", }}
+        // keys: ["type","bark","scream"]
+        const keys=Object.keys(this.cfg);
+        const promises=keys.map(async function(key){
+            const url="./static/"+this.cfg[key].url;
+            const fetchurl=await fetch(url,{cache:"force-cache"});
+            if(!fetchurl.ok){
+                this.buffer[key]=null;
+                addLog(`Audio Load Failed: ${key}`);
+            }
+            const arrBuffer=fetchurl
+            
+        })
+    }
+}
 
 
 (async function () {
@@ -444,6 +482,17 @@ class GameManager {
             bartsimpsons:[],
             dogs:[]
         };
+        this.pps=document.getElementById("pps");
+        this.clock=document.getElementById("game-clock");
+        
+        setInterval(()=>{
+            this.pps.textContent=`${(this.score/((Date.now()-GAMESTARTTIME)/1000)).toFixed(0)} points/sec`;
+            const totalms=Date.now()-GAMESTARTTIME;
+            const totalsec=Math.floor(totalms/1000);
+            const totalmin=Math.floor(totalsec/60);
+
+            this.clock.textContent=`${totalmin} mins ${totalsec} sec`;
+        },1000)
 
         this.clickArea = {
             x: 0,
