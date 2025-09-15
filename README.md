@@ -1,75 +1,171 @@
-# Tutorial
-Click Game #Jerry
+# Click a Jerry
+*Slogan : 簡短的介紹你的遊戲*
 
-# Game Rules!
+![遊戲預覽](your_image_path)
 
-- Click Jerry to upgrade/unlock weapons to click more Jerry.
+## Table of contents
+- [Intro](#Intro)
+- [Quick Start](#Quick-Start)
+- [Controls and UI](#Controls-and-UI)
+- [Core Mechnism](#Core-Mechnism)
+- [Upgrades System](#Upgrades-System)
+- [Characters and Skills Explained](#Characters-and-Skills-Explained)
+- [Achievement System](#Achievement-System)
+- [Beginner Tutorial Flow](#Beginner-Tutorial-Flow)
+- [FAQ](#FAQ)
+- [Contribution and Contact](#Contribution-and-Contact)
+- [License](#License)
+- [Appendix](#Appendix)
+- [History](#History)
 
-- At the start will only have a moes in the map and you have to click them to get points.
-    - 3s per random
-    - 1pt per click.
-    - Buy "Jerrys" Upgrade for more Jerrys at the map.
+---
 
-- Big Jerry: 
-    - every 7-15 min, click to disapuse trap and a jerry. Jerry is upgradable. 
+## Intro
+說明遊戲類型（Clicker / Simulation）、目標（收集成就、解鎖角色/升級）、適合的玩家類型與遊玩時長期待。可放一張遊戲整體 UI 截圖。
 
-- Jerrys will spawn in random placpear
-    - 3000pt per click or all weapon upgrade price - 50%
+Welcome to Click A Jerry, In this game, your main goal is to progress and unlock every upgrade and achievement. 
 
-- Mouse Trap:
+Target Audience/Players: Users who enjoy short,fun minigames
 
-    - 3s per random 
-    - -50% pt you have per click
-### Weapons
-
-
-- Grandma
-    - Action: every 25s a grandma will appear and catch Jerrys in a certain square range, after 25s, if there is no other grandmas, rest 25s.
-
-    - Price: Ascending *2
-
-    - Upgrade: Increase Radius and -CD
-
-    - Max Grandmas: 1;
+Game Length: 1-2 hours
 
 
-- Tom
 
-    - **Action**: Tom will increase your click-power based on how much Toms you own (ex. 1 tom = + 0.5 click-power)
+---
 
-    - **Upgrade**: More Click-Power
+## Quick Start
+**寫作說明：** 用 3~5 步驟快速教會玩家如何開始遊戲（例如：1. 開啟遊戲頁面 2. 點擊 Jerry 獲得分數 3. 到右側商店購買第一個角色 4. 解鎖成就）。每步可以用簡短指令或圖片示範。
 
-    - **Price**: Ascending *2 (10)
+Your first step is to open the Game tab, go to your browser (recommend Microsoft Edge) and Enter: "LoreBao.github.io/Click-Project" to Enter the Game
 
-    - **Max**: Unlimited
+Your Next Step is to Locate a Jerry, upon clicking it activates the game, giving you points on every click of a Jerry
+
+Find Upgrades/Unlock on your right side, this is where you unlock characters and upgrades, You'll need the right amount or above of points to activate certain actions, such as Upgrading a *Grandma* or Unlocking *Godzilla*
+
+You may find the **Achievements** Tab on your left, it is not required but ideal to try to unlock achievements as satisfaction. In your Early Game (15-20mins), the easiest achievement would be *Tom and Jerry*, which is **Addamount a Jerry** and **Unlocking a Tom**
+
+
+
+
+---
+
+## Controls and UI
+**寫作說明：** 詳列主要 UI 元素（遊戲場景、右側商店、分數顯示、CD / 狀態圖示、成就按鈕）。在每個 UI 元素旁標註對應的圖檔（例如 `tutorialupgrades.png`、`ac.png`、`tomt.png`），並說明互動方式（點擊、拖曳、長按等）。
+
+**Click**
+You may use your *Left-Button* on your mouse to execute the *click* action, clicking on a Jerry may give you points based on **Jerry.reward**, which can be increased based on the amount of **Toms**
+
+**Score**
+Located on the Left-Top side, this UI displays your total score
+
+**Characters Tab**
+Located on the right side, this is where the user manages all the characters, several actions include
+
+    - **Upgrade**: Upgrading The Characters Attributes
+
+    - **Unlock**: Activate The Character for future uses
+
+**Side Screen**
+Below the Jerry Screen, This is where **Tom** and **Dog** Display once you unlock them
+
+---
+
+## Core Mechnism
+**寫作說明：** 解釋遊戲的基礎規則與數值流程：
+- 點擊 Jerry -> 獲得 points（點數計算方式、是否有暴擊或多重 Jerry）。
+- Jerry 出現/數量規則（同時上限、刷新頻率）。
+- 分數用處（升級、購買角色、解鎖成就）。
+- UI 上的即時反饋（文字、動畫、聲音提示）。
+
+可放一個簡單表格示例：`points per click`、`max jerrys on screen`、`spawn interval`（只需示範欄位名稱與建議填入內容的位置）。
+
+
+---
+
+## Upgrades System
+**寫作說明：** 概述商店系統與升級類型，並示範如何呈現每個商品的欄位：
+- 商品名稱
+- 類型（Destroyer / Automatic / Dealer / Consumable / One-time）
+- 基本效果
+- 價格成長公式（例：Price = base * 2^n 或 *1.5）
+- 升級效果（每等級額外數值）
+- 上限（Max）
+- 冷卻或消耗（若有）
+
+在這段插入 `tutorialupgrades.png` 作為右側商店示意圖。建議使用表格來列出 Season 1 的全部可購物品（第一版示例）。
+
+---
+
+## Characters and Skills Explained
+**寫作說明：** 逐一列出遊戲內的角色/技能（帶小節），每個角色下提供：功能敘述、具體數值（或示範欄位）、價格曲線、升級效果、特別規則（例：Grandma 最多 1 個，Godzilla 一次用兩次等），以及對新手/進階玩家的策略建議。
+
+### Grandma
+- 寫作說明：Action、價格成長、Upgrade 效果（半徑、-CD）、Max（1）、使用時機示例。
+
+### Tom
+- 寫作說明：如何提升 click-power、價格成長、是否可疊加（unlimited）、每等級加成範例。
+
+### Spike
+- 寫作說明：自動產生點數的機制、需餵食骨頭（consumable）規則、升級帶來的變化（頻率/收益/消耗）。
+
+### Jerry Upgrade
+- 寫作說明：增加同時 Jerry 數量與每次點擊點數、風險（25% mouse trap 機率）、價格成長公式、平衡建議。
+
+### Godzilla
+- 寫作說明：一次性武器但可用 2 次、清空一列、價格與上限、使用情境建議。
+
+### Bart Simpson
+- 寫作說明：一次性武器、清空全場、價格與上限、使用情境（大招類）。
+
+---
+
+## Achievement System
+**寫作說明：** 說明成就類別（累積型、挑戰型、隱藏成就），每個成就應包含觸發條件、獎勵（若有）、以及成就顯示位置（指向 `ac.png`）。示範 3~5 個 Season 1 的成就範例欄位。
+
+---
+
+## Beginner Tutorial Flow
+**寫作說明：** 提供一個 step-by-step 的新手教學腳本（適合內建 Tutorial 或 README 的「玩家第一步」教學）。每一步一句話說明要展示的互動與期望學習目標，例如：
+1. 第一次點擊—教會玩家點擊獲得分數。
+2. 購買第一個 Tom—展示升級系統。
+3. 購買 Spike 並餵食骨頭—教會自動點數與消耗物品。
+4. 遇到 mouse trap—教玩家如何處理風險。
+5. 使用 Godzilla/Bart 作為示範大招。
+
+每步可標註 UI 提示或建議使用的提示文字（tooltip）。
+Tips : 可以寫一些給新手到中階玩家的建議（例如：優先投資 Tom 增加 click-power、在特定階段使用 Godzilla、如何安排 Spike 的餵養以最大化收益、資金分配建議）。可用「初期策略 / 中期策略 / 末期策略」分段。
+
+
+---
+
+## FAQ
+**寫作說明：** 列出玩家可能問的問題（例如：如何解除 mouse trap、骨頭從哪買、Grandma 為何不出現、價格為何跳很快），並給簡短解答。也可放入 debug tip（例如清除 cookies、如何回報 bug）。
+
+---
+
+
+## Contribution and Contact
+
+這邊你不用寫
+
+---
+
+## License
+MIT License (這邊你不用寫)
+
+---
+
+## Appendix
+**寫作說明：** 放上完整的參數表或數值表格（例如：每個角色的 base price、price growth formula、base effect、CD、max），以及放置圖片檔名索引：
+- `jt.png` — Jerry 範例圖
+- `tutorialupgrades.png` — 右側商店範例
+- `ac.png` — 成就視覺
+- `tomt.png` — Tom 範例圖
+
+---
+
+## History
+### Version 1.0
+**寫作說明：** 該版本時間，還有版本內容，以條列式呈現。或是以後有版本更新也要註記在這裡
 
     
-
-
-- Spike
-
-    - **Action**: Auto gain points every certain amount of time, need to feed bone or he will be angry and not help you (buy bone from shop)
-
-    - **Upgrade**: -time , more points , consume more bones (5 time upgrade=+1 bone);
-
-    - **Price**: Ascending + 500 (100)
-
-    - **Max**: Unlimited
-
-
-- Jerry Upgrade
-    - **Upgradable** : More Jerrys at a time and more points per click, but 25% chance it could be a mouse trap
-    - **Price** : Ascending * 1.5
-    - **Max** : Unlimited
-
-- Godzilla
-    - **Action** : One time use weapon, clear all the Jerrys in a *row*
-    - **Price** : Ascending * 2.5
-    - **Max** : Maximun 1, each Godzilla can only be used two times.
-
-- Bart Simpson
-    - **Action** : One time use weapon, clear all the Jerrys on the board
-    - **Price** : Ascending * 3.2
-    - **Max** : One per time.
-
-
