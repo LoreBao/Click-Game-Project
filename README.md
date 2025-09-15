@@ -21,8 +21,6 @@
 ---
 
 ## Intro
-說明遊戲類型（Clicker / Simulation）、目標（收集成就、解鎖角色/升級）、適合的玩家類型與遊玩時長期待。可放一張遊戲整體 UI 截圖。
-
 Welcome to Click A Jerry, In this game, your main goal is to progress and unlock every upgrade and achievement. 
 
 Target Audience/Players: Users who enjoy short,fun minigames
@@ -34,8 +32,6 @@ Game Length: 1-2 hours
 ---
 
 ## Quick Start
-**寫作說明：** 用 3~5 步驟快速教會玩家如何開始遊戲（例如：1. 開啟遊戲頁面 2. 點擊 Jerry 獲得分數 3. 到右側商店購買第一個角色 4. 解鎖成就）。每步可以用簡短指令或圖片示範。
-
 Your first step is to open the Game tab, go to your browser (recommend Microsoft Edge) and Enter: "LoreBao.github.io/Click-Project" to Enter the Game
 
 Your Next Step is to Locate a Jerry, upon clicking it activates the game, giving you points on every click of a Jerry
@@ -50,8 +46,6 @@ You may find the **Achievements** Tab on your left, it is not required but ideal
 ---
 
 ## Controls and UI
-**寫作說明：** 詳列主要 UI 元素（遊戲場景、右側商店、分數顯示、CD / 狀態圖示、成就按鈕）。在每個 UI 元素旁標註對應的圖檔（例如 `tutorialupgrades.png`、`ac.png`、`tomt.png`），並說明互動方式（點擊、拖曳、長按等）。
-
 **Click**
 You may use your *Left-Button* on your mouse to execute the *click* action, clicking on a Jerry may give you points based on **Jerry.reward**, which can be increased based on the amount of **Toms**
 
@@ -79,6 +73,28 @@ Below the Jerry Screen, This is where **Tom** and **Dog** Display once you unloc
 
 可放一個簡單表格示例：`points per click`、`max jerrys on screen`、`spawn interval`（只需示範欄位名稱與建議填入內容的位置）。
 
+**Game Cycle**
+Click a Jerry for points, every click of a Jerry would give you points determined by (Jerry.reward), this can only be increased via **Toms**
+
+When adding a Jerry (**AddAmount** Jerry), there is a *25%* chance of summoning a **Trap**, clicking on a trap would result in a decrease of 50% of all your points!
+
+Jerry would respawn/randomized their position every three seconds, there are *No Limits* of how much Jerry could be on your screen, you may increase the amount via **AddAmount** Jerry Upgrade.
+
+Scores can be used for:
+
+    - Upgrade
+    - Unlock
+    - BuyBones
+    - IncreaseRange
+    - DecreaseCD
+    - Addamount
+
+Audio would play based on actions such as:
+
+    - Clicking a Trap: *scream.mp3*
+    - Achieve All Achievements: *mango.mp3*
+
+    
 
 ---
 
