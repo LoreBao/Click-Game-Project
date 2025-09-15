@@ -153,6 +153,18 @@ Recommend Use: Late-End Game where Jerrys are a lot
 ## Achievement System
 **寫作說明：** 說明成就類別（累積型、挑戰型、隱藏成就），每個成就應包含觸發條件、獎勵（若有）、以及成就顯示位置（指向 `ac.png`）。示範 3~5 個 Season 1 的成就範例欄位。
 
+In the Game, there are many achievements waiting for you to unlock. Your goal is to collect all of them, each requiring a different level of dedication.
+
+**Challenging**: Points Series (1,2,Champion): Requires dedication and progressing through early-mid game is required
+
+**Beginner**: Tom and Jerry: Only need to Unlock Tom
+
+**Medium**: Encycopedia: Not as Hard as the **Points Series**, but require a certain level of time to unlock all the characetrs
+
+**Hardest**: Absoulte Dedication: Need to unlock all achievements
+
+
+
 ---
 
 ### Early Game: Guide
