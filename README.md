@@ -115,25 +115,38 @@ Audio would play based on actions such as:
 ---
 
 ## Characters and Skills Explained
-**寫作說明：** 逐一列出遊戲內的角色/技能（帶小節），每個角色下提供：功能敘述、具體數值（或示範欄位）、價格曲線、升級效果、特別規則（例：Grandma 最多 1 個，Godzilla 一次用兩次等），以及對新手/進階玩家的策略建議。
 
 ### Grandma
-- 寫作說明：Action、價格成長、Upgrade 效果（半徑、-CD）、Max（1）、使用時機示例。
+Dog would automatically get points for you when having contact with a Jerry while jumping on the map. This upgrade is not recommended in early game phase since it requires percision
+
+Recommend Use: Late-End Game where Jerrys are a lot
+
 
 ### Tom
-- 寫作說明：如何提升 click-power、價格成長、是否可疊加（unlimited）、每等級加成範例。
+Tom would increase your points per click depending on how much Toms you own.
+
+Recommend Use: Early-Mid Game, when upgrades are too expensive and relies on manual clicking as primary point source
 
 ### Spike
-- 寫作說明：自動產生點數的機制、需餵食骨頭（consumable）規則、升級帶來的變化（頻率/收益/消耗）。
+Dog would automatically get points for you and the amount of points recieved automatically would be upgradable. However, bones are needed to make Dog work consistently. You can buy bones via "Buy Bones"
+
+Recommend Use: Early-Mid Game, when a consistent point rate is needed
 
 ### Jerry Upgrade
-- 寫作說明：增加同時 Jerry 數量與每次點擊點數、風險（25% mouse trap 機率）、價格成長公式、平衡建議。
+Jerry Upgrade adds the amount of Jerrys on the map, making it easy to get points via clicking or characters. However, it would have 25% of summoning a trap.
+
+Recommend use: Always, As soon as possible
 
 ### Godzilla
-- 寫作說明：一次性武器但可用 2 次、清空一列、價格與上限、使用情境建議。
+Godzilla could be purchased for 700 points and unlocked for 3500. Purchasing a Godzilla would clear out a entire row of Jerrys after it's cooldown (25s)
+
+Recommend Use: Late-End Game where Jerrys are a lot
+
 
 ### Bart Simpson
-- 寫作說明：一次性武器、清空全場、價格與上限、使用情境（大招類）。
+Bart Simpson coul be purchased for 3000 points and unlocked for 5000. Purchasing a Bart Simpson would clear out your entire map of Jerrys after it's cooldown (25s)
+
+Recommend Use: Late-End Game where Jerrys are a lot
 
 ---
 
