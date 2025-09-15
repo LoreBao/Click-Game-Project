@@ -110,6 +110,29 @@ Audio would play based on actions such as:
 
 在這段插入 `tutorialupgrades.png` 作為右側商店示意圖。建議使用表格來列出 Season 1 的全部可購物品（第一版示例）。
 
+#### Consumables
+*Bones* are the **Only** consumable added in Season 1, a consumable would act as a fuel for certain characters, such as **Dog**
+
+#### Automatic
+Automatic Characters/Upgrades would result it the user automatically getting points based on the set time period or set points per certain time period. 
+
+**Examples**
+
+- **Dog**
+- **Grandma**
+
+#### Destroyer
+Destroyer could clear Jerrys either fast and single or slow and big range.
+
+**Fast, Single**
+The Character **Grandma** Clears Jerry by randomizing it's position quickly to try to capture a Jerry
+
+**Slow, AOE**
+The Characters **Godzilla** and **Bart Simpson** Clears Jerry by having a slower cooldown, but could clear entire rows and even the whole map, making them expensive upgrade/characters but deadly.
+
+
+### Dealer
+a *Dealer* upgrade/characters boosts your ability to gain more points in different ways. The only *Dealer* character in Season 1 would be **Tom**. **Tom** would increase your points/click based on the amount of **Tom**s you own
 
 
 ---
@@ -117,7 +140,7 @@ Audio would play based on actions such as:
 ## Characters and Skills Explained
 
 ### Grandma
-Dog would automatically get points for you when having contact with a Jerry while jumping on the map. This upgrade is not recommended in early game phase since it requires percision
+Grandma would automatically get points for you when having contact with a Jerry while jumping on the map. This upgrade is not recommended in early game phase since it requires percision
 
 Recommend Use: Late-End Game where Jerrys are a lot
 
@@ -221,12 +244,12 @@ A: Bones are needed to make dog continue working, buy them via "Buy Bones"
 
 ## Contribution and Contact
 
-這邊你不用寫
+
 
 ---
 
 ## License
-MIT License (這邊你不用寫)
+
 
 ---
 
@@ -241,6 +264,6 @@ MIT License (這邊你不用寫)
 
 ## History
 ### Version 1.0
-**寫作說明：** 該版本時間，還有版本內容，以條列式呈現。或是以後有版本更新也要註記在這裡
+
 
     
