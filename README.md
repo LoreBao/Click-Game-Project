@@ -184,7 +184,7 @@ In the Game, there are many achievements waiting for you to unlock. Your goal is
 
 **Medium**: Encycopedia: Not as Hard as the **Points Series**, but require a certain level of time to unlock all the characetrs
 
-**Hardest**: Absoulte Dedication: Need to unlock all achievements
+**Hardest**: Absolute Dedication: Need to unlock all achievements
 
 
 
@@ -206,7 +206,7 @@ After Unlocking **Grandma**, **Tom** and **Dog**, work your way into unlocking o
 **Godzilla**: Clear entire row of Jerrys after it's cooldown
 **Bart Simpson** Clear every Jerrys after its cooldown
 
-Unlocking these two characters woul dramatically increase your progress speed, allowing you to farm more points 
+Unlocking these two characters would dramatically increase your progress speed, allowing you to farm more points 
 
 ### End-Game: Guide
 After unlocking all the characters, it is ideal to move on into unlocking the *Points Master* achievement set, which includes:
@@ -250,15 +250,6 @@ A: Bones are needed to make dog continue working, buy them via "Buy Bones"
 
 ## License
 
-
----
-
-## Appendix
-**寫作說明：** 放上完整的參數表或數值表格（例如：每個角色的 base price、price growth formula、base effect、CD、max），以及放置圖片檔名索引：
-- `jt.png` — Jerry 範例圖
-- `tutorialupgrades.png` — 右側商店範例
-- `ac.png` — 成就視覺
-- `tomt.png` — Tom 範例圖
 
 ---
 
