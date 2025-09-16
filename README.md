@@ -23,7 +23,7 @@
 ## Intro
 Welcome to Click A Jerry, In this game, your main goal is to progress and unlock every upgrade and achievement. 
 
-Target Audience/Players: Users who enjoy short,fun minigames
+Target Audience/Players: Users who enjoy short,fun minigames.
 
 Game Length: 1-2 hours
 
@@ -32,7 +32,7 @@ Game Length: 1-2 hours
 ---
 
 ## Quick Start
-Your first step is to open the Game tab, go to your browser (recommend Microsoft Edge) and Enter: "LoreBao.github.io/Click-Project" to Enter the Game
+Your first step is to open the *Game* tab, go to your browser (recommend Microsoft Edge) and Enter: [Link](https://LoreBao.github.io/Click-Project) to **Enter the Game**
 
 Your Next Step is to Locate a Jerry, upon clicking it activates the game, giving you points on every click of a Jerry
 
@@ -65,18 +65,12 @@ Below the Jerry Screen, This is where **Tom** and **Dog** Display once you unloc
 ---
 
 ## Core Mechnism
-**寫作說明：** 解釋遊戲的基礎規則與數值流程：
-- 點擊 Jerry -> 獲得 points（點數計算方式、是否有暴擊或多重 Jerry）。
-- Jerry 出現/數量規則（同時上限、刷新頻率）。
-- 分數用處（升級、購買角色、解鎖成就）。
-- UI 上的即時反饋（文字、動畫、聲音提示）。
 
-可放一個簡單表格示例：`points per click`、`max jerrys on screen`、`spawn interval`（只需示範欄位名稱與建議填入內容的位置）。
 
 **Game Cycle**
 Click a Jerry for points, every click of a Jerry would give you points determined by (Jerry.reward), this can only be increased via **Toms**
 
-When adding a Jerry (**AddAmount** Jerry), there is a *25%* chance of summoning a **Trap**, clicking on a trap would result in a decrease of 50% of all your points!
+When adding a Jerry (**Add Amount** Jerry), there is a *25%* chance of summoning a **Trap**, clicking on a trap would result in a decrease of 50% of all your points!
 
 Jerry would respawn/randomized their position every three seconds, there are *No Limits* of how much Jerry could be on your screen, you may increase the amount via **AddAmount** Jerry Upgrade.
 
@@ -99,16 +93,7 @@ Audio would play based on actions such as:
 ---
 
 ## Upgrades System
-**寫作說明：** 概述商店系統與升級類型，並示範如何呈現每個商品的欄位：
-- 商品名稱
-- 類型（Destroyer / Automatic / Dealer / Consumable / One-time）
-- 基本效果
-- 價格成長公式（例：Price = base * 2^n 或 *1.5）
-- 升級效果（每等級額外數值）
-- 上限（Max）
-- 冷卻或消耗（若有）
 
-在這段插入 `tutorialupgrades.png` 作為右側商店示意圖。建議使用表格來列出 Season 1 的全部可購物品（第一版示例）。
 
 #### Consumables
 *Bones* are the **Only** consumable added in Season 1, a consumable would act as a fuel for certain characters, such as **Dog**
@@ -119,7 +104,7 @@ Automatic Characters/Upgrades would result it the user automatically getting poi
 **Examples**
 
 - **Dog**
-- **Grandma**
+
 
 #### Destroyer
 Destroyer could clear Jerrys either fast and single or slow and big range.
@@ -132,7 +117,7 @@ The Characters **Godzilla** and **Bart Simpson** Clears Jerry by having a slower
 
 
 ### Dealer
-a *Dealer* upgrade/characters boosts your ability to gain more points in different ways. The only *Dealer* character in Season 1 would be **Tom**. **Tom** would increase your points/click based on the amount of **Tom**s you own
+a *Dealer* characters boosts your ability to gain more points in different ways. The only *Dealer* character in Season 1 would be **Tom**. **Tom** would increase your points/click based on the amount of **Tom**s you own
 
 
 ---
@@ -174,7 +159,7 @@ Recommend Use: Late-End Game where Jerrys are a lot
 ---
 
 ## Achievement System
-**寫作說明：** 說明成就類別（累積型、挑戰型、隱藏成就），每個成就應包含觸發條件、獎勵（若有）、以及成就顯示位置（指向 `ac.png`）。示範 3~5 個 Season 1 的成就範例欄位。
+
 
 In the Game, there are many achievements waiting for you to unlock. Your goal is to collect all of them, each requiring a different level of dedication.
 

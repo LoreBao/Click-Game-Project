@@ -90,7 +90,7 @@ let ACHIEVEMENTS=[
 ];
 
 // ===Added Audio Manager=== //
-class AudioManager{
+class  AudioManager{
     constructor(cfg){
         this.cfg=cfg;
         this.buffer={};
@@ -115,20 +115,52 @@ class AudioManager{
         // cfg : {"type":"Audio", "bark":{"url":"...", }}
         // keys: ["type","bark","scream"]
         const keys=Object.keys(this.cfg);
-        const promises=keys.map(async function(key){
-            const url="./static/"+this.cfg[key].url;
-            const fetchurl=await fetch(url,{cache:"force-cache"});
+        console.log(this.cfg['bark']);
+        addLog(`${this.cfg}`);
+        const promises=keys.map(async (key)=>{
+            const url=sthis.cfg[key].url;
+            const fetchurl=await fetch(url);
             if(!fetchurl.ok){
                 this.buffer[key]=null;
                 addLog(`Audio Load Failed: ${key}`);
             }
-            const arrBuffer=fetchurl
-            
+            const arrBuffer= await fetchurl.arrayBuffer();
+            const arrDecode= await this.ctx.decodeAudioData(arrBuffer);
+            this.buffer[key]=arrDecode;
+            this.minGap[key]=this.cfg[key].minGap;
         })
+
+        await Promise.all(promises);
+        addLog("All Audio has Loaded Successfully!");
     }
+
+    play(key,playbackRate,volume){ 
+        if(!this.unlock||!this.buffer[key]){
+            addLog(`Audio ${key} has failed to load (E)`);
+        }
+        if(Date.now()-this.lastPlay[key]<this.minGap[key]){
+            return;
+        }
+
+        this.lastPlay[key]=Date.now();
+        const player=this.ctx.createBufferSource();
+        player.buffer=this.buffer[key];
+        player.playbackRate.value=playbackRate;
+        const gainNode=this.ctx.createGain();
+        gainNode.gain.value=volume;
+
+        player.connect(gainNode).connect(this.ctx.destination);
+
+        player.onended=()=>{
+            player.disconnect();
+            gainNode.disconnect();
+        }
+        player.start(0);
+    }
+
 }
 
-
+let AUDIO = null;
 (async function () {
     const configData = await fetch("static/config.json").then(r => r.json());
     CONFIG = Object.fromEntries(configData.map(function (value) {
@@ -155,7 +187,12 @@ class AudioManager{
         c.img.onerror = () => resolve(); // 失敗也繼續
     });
     }));
-
+    
+    AUDIO=new AudioManager(CONFIG["Audio"]);
+    document.addEventListener("pointerdown",async ()=>{
+        await AUDIO.init();
+        await AUDIO.load();
+    });
     addLog("Game has Started!");
     GAMESTARTTIME=Date.now();
     renderAchievements();
@@ -515,6 +552,7 @@ class GameManager {
                 if(traps.clicked(this.clickArea)){
                     this.score=Math.floor((1+traps.reward/100)*this.score);
                     this.updateBoard();
+                    AUDIO.play("scream",1,0.2);
                     addLog("Click Jerry, Not Trap!")
                 }
             })
