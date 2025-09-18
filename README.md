@@ -1,245 +1,227 @@
 # Click a Jerry
-*Slogan : 簡短的介紹你的遊戲*
+
+*Slogan: For the ultimate Tom & Jerry… and others fan!*
 
 ![遊戲預覽](your_image_path)
 
 ## Table of contents
-- [Intro](#Intro)
-- [Quick Start](#Quick-Start)
-- [Controls and UI](#Controls-and-UI)
-- [Core Mechnism](#Core-Mechnism)
-- [Upgrades System](#Upgrades-System)
-- [Characters and Skills Explained](#Characters-and-Skills-Explained)
-- [Achievement System](#Achievement-System)
-- [Beginner Tutorial Flow](#Beginner-Tutorial-Flow)
-- [FAQ](#FAQ)
-- [Contribution and Contact](#Contribution-and-Contact)
-- [License](#License)
-- [Appendix](#Appendix)
-- [History](#History)
+
+* [Intro](#Intro)
+* [Quick Start](#Quick-Start)
+* [Controls and UI](#Controls-and-UI)
+* [Core Mechanism](#Core-Mechanism)
+* [Upgrade System](#Upgrade-System)
+* [Characters and Skills Explained](#Characters-and-Skills-Explained)
+* [Achievement System](#Achievement-System)
+* [Beginner Tutorial Flow](#Beginner-Tutorial-Flow)
+* [FAQ](#FAQ)
+* [Contribution and Contact](#Contribution-and-Contact)
+* [License](#License)
+* [Appendix](#Appendix)
+* [History](#History)
 
 ---
 
 ## Intro
-Welcome to Click A Jerry, In this game, your main goal is to progress and unlock every upgrade and achievement. 
 
-Target Audience/Players: Users who enjoy short,fun minigames.
+Welcome to **Click a Jerry**! In this game, your goal is to progress and unlock every upgrade and achievement.
 
-Game Length: 1-2 hours
+**Target Audience/Players:** Users who enjoy short, fun minigames.
 
-
+**Game Length:** 1–2 hours
 
 ---
 
 ## Quick Start
-Your first step is to open the *Game* tab, go to your browser (recommend Microsoft Edge) and Enter: [Link](https://LoreBao.github.io/Click-Project) to **Enter the Game**
 
-Your Next Step is to Locate a Jerry, upon clicking it activates the game, giving you points on every click of a Jerry
+Your first step is to open the *Game* tab, launch your browser (Microsoft Edge recommended), and enter: [Link](https://LoreBao.github.io/Click-Project) to **enter the game**.
 
-Find Upgrades/Unlock on your right side, this is where you unlock characters and upgrades, You'll need the right amount or above of points to activate certain actions, such as Upgrading a *Grandma* or Unlocking *Godzilla*
+Next, locate a Jerry. Clicking it starts the game and gives you points for every Jerry click.
 
-You may find the **Achievements** Tab on your left, it is not required but ideal to try to unlock achievements as satisfaction. In your Early Game (15-20mins), the easiest achievement would be *Tom and Jerry*, which is **Addamount a Jerry** and **Unlocking a Tom**
+Find **Upgrades/Unlock** on the right side—this is where you unlock characters and upgrades. You’ll need enough points to perform certain actions, such as upgrading *Grandma* or unlocking *Godzilla*.
 
-
-
+You’ll find the **Achievements** tab on the left. It’s optional but satisfying to unlock achievements. In your early game (first 15–20 minutes), the easiest achievement is **Tom and Jerry**, which requires **adding a Jerry** and **unlocking a Tom**.
 
 ---
 
 ## Controls and UI
+
 **Click**
-You may use your *Left-Button* on your mouse to execute the *click* action, clicking on a Jerry may give you points based on **Jerry.reward**, which can be increased based on the amount of **Toms**
+Use the *left mouse button* to click. Clicking a Jerry grants points based on **Jerry.reward**, which increases with the number of **Toms** you own.
 
 **Score**
-Located on the Left-Top side, this UI displays your total score
+Displayed at the top-left; shows your total score.
 
 **Characters Tab**
-Located on the right side, this is where the user manages all the characters, several actions include
+Located on the right; manage characters with actions such as:
 
-    - **Upgrade**: Upgrading The Characters Attributes
-
-    - **Unlock**: Activate The Character for future uses
+* **Upgrade:** Improve character attributes.
+* **Unlock:** Activate the character for future use.
 
 **Side Screen**
-Below the Jerry Screen, This is where **Tom** and **Dog** Display once you unlock them
+Below the Jerry screen. This is where **Tom** and **Dog** are displayed once unlocked.
 
 ---
 
-## Core Mechnism
-
+## Core Mechanism
 
 **Game Cycle**
-Click a Jerry for points, every click of a Jerry would give you points determined by (Jerry.reward), this can only be increased via **Toms**
+Click a Jerry to earn points. Each click yields points determined by **Jerry.reward**, which can be increased via **Toms**.
 
-When adding a Jerry (**Add Amount** Jerry), there is a *25%* chance of summoning a **Trap**, clicking on a trap would result in a decrease of 50% of all your points!
+When adding a Jerry (**AddAmount Jerry**), there is a **25%** chance to summon a **Trap**. Clicking a Trap will **reduce your total points by 50%**!
 
-Jerry would respawn/randomized their position every three seconds, there are *No Limits* of how much Jerry could be on your screen, you may increase the amount via **AddAmount** Jerry Upgrade.
+Jerrys **respawn/randomize position every three seconds**. There is **no limit** to how many Jerrys can be on your screen. Increase the amount via the **AddAmount Jerry** upgrade.
 
 Scores can be used for:
 
-    - Upgrade
-    - Unlock
-    - BuyBones
-    - IncreaseRange
-    - DecreaseCD
-    - Addamount
+* Upgrade
+* Unlock
+* BuyBones
+* IncreaseRange
+* DecreaseCD
+* AddAmount
 
-Audio would play based on actions such as:
+Audio cues play for actions such as:
 
-    - Clicking a Trap: *scream.mp3*
-    - Achieve All Achievements: *mango.mp3*
-
-    
+* Clicking a Trap: *scream.mp3*
+* Achieving all achievements: *mango.mp3*
 
 ---
 
-## Upgrades System
-
+## Upgrade System
 
 #### Consumables
-*Bones* are the **Only** consumable added in Season 1, a consumable would act as a fuel for certain characters, such as **Dog**
+
+*Bones* are the **only** consumable in Season 1. Consumables act as fuel for certain characters, such as **Dog**.
 
 #### Automatic
-Automatic Characters/Upgrades would result it the user automatically getting points based on the set time period or set points per certain time period. 
 
-**Examples**
+Automatic characters/upgrades grant points automatically at set intervals or rates.
 
-- **Dog**
+**Example**
 
+* **Dog**
 
 #### Destroyer
-Destroyer could clear Jerrys either fast and single or slow and big range.
 
-**Fast, Single**
-The Character **Grandma** Clears Jerry by randomizing it's position quickly to try to capture a Jerry
+Destroyers clear Jerrys either **quickly with single-target** effects or **slowly with large-area (AOE)** effects.
+
+**Fast, Single-Target**
+**Grandma** rapidly randomizes positions to try to capture a single Jerry.
 
 **Slow, AOE**
-The Characters **Godzilla** and **Bart Simpson** Clears Jerry by having a slower cooldown, but could clear entire rows and even the whole map, making them expensive upgrade/characters but deadly.
-
+**Godzilla** and **Bart Simpson** have longer cooldowns but can clear entire rows or even the whole map—expensive but devastating.
 
 ### Dealer
-a *Dealer* characters boosts your ability to gain more points in different ways. The only *Dealer* character in Season 1 would be **Tom**. **Tom** would increase your points/click based on the amount of **Tom**s you own
 
+A **Dealer** character boosts your point gain in different ways. The only Dealer in Season 1 is **Tom**. **Tom** increases your points per click based on how many **Toms** you own.
 
 ---
 
 ## Characters and Skills Explained
 
 ### Grandma
-Grandma would automatically get points for you when having contact with a Jerry while jumping on the map. This upgrade is not recommended in early game phase since it requires percision
 
-Recommend Use: Late-End Game where Jerrys are a lot
-
+Automatically earns points when colliding with a Jerry while jumping around the map. Not recommended in early game due to the precision required.
+**Recommended Use:** Late–end game when there are many Jerrys.
 
 ### Tom
-Tom would increase your points per click depending on how much Toms you own.
 
-Recommend Use: Early-Mid Game, when upgrades are too expensive and relies on manual clicking as primary point source
+Increases your points per click depending on how many Toms you own.
+**Recommended Use:** Early–mid game when upgrades are expensive and manual clicking is your primary point source.
 
-### Spike
-Dog would automatically get points for you and the amount of points recieved automatically would be upgradable. However, bones are needed to make Dog work consistently. You can buy bones via "Buy Bones"
+### Spike (Dog)
 
-Recommend Use: Early-Mid Game, when a consistent point rate is needed
+Automatically earns points for you, and the auto-gain amount is upgradable. However, **Bones** are needed to keep Dog working consistently. Purchase Bones via **Buy Bones**.
+**Recommended Use:** Early–mid game when a steady point rate is needed.
 
 ### Jerry Upgrade
-Jerry Upgrade adds the amount of Jerrys on the map, making it easy to get points via clicking or characters. However, it would have 25% of summoning a trap.
 
-Recommend use: Always, As soon as possible
+Increases the number of Jerrys on the map, making it easier to gain points via clicking or characters. However, each add has a **25%** chance to summon a Trap.
+**Recommended Use:** Always—get it as soon as possible.
 
 ### Godzilla
-Godzilla could be purchased for 700 points and unlocked for 3500. Purchasing a Godzilla would clear out a entire row of Jerrys after it's cooldown (25s)
 
-Recommend Use: Late-End Game where Jerrys are a lot
-
+Can be purchased for **700 points** and unlocked for **3,500 points**. After its **25s** cooldown, Godzilla clears an entire row of Jerrys.
+**Recommended Use:** Late–end game when there are many Jerrys.
 
 ### Bart Simpson
-Bart Simpson coul be purchased for 3000 points and unlocked for 5000. Purchasing a Bart Simpson would clear out your entire map of Jerrys after it's cooldown (25s)
 
-Recommend Use: Late-End Game where Jerrys are a lot
+Can be purchased for **3,000 points** and unlocked for **5,000 points**. After its **25s** cooldown, Bart Simpson clears the **entire map** of Jerrys.
+**Recommended Use:** Late–end game when there are many Jerrys.
 
 ---
 
 ## Achievement System
 
+There are many achievements to unlock. Your ultimate goal is to collect them all; each requires a different level of dedication.
 
-In the Game, there are many achievements waiting for you to unlock. Your goal is to collect all of them, each requiring a different level of dedication.
-
-**Challenging**: Points Series (1,2,Champion): Requires dedication and progressing through early-mid game is required
-
-**Beginner**: Tom and Jerry: Only need to Unlock Tom
-
-**Medium**: Encycopedia: Not as Hard as the **Points Series**, but require a certain level of time to unlock all the characetrs
-
-**Hardest**: Absolute Dedication: Need to unlock all achievements
-
-
+* **Challenging:** **Points Series (I, II, Champion)** — requires commitment through early–mid game.
+* **Beginner:** **Tom and Jerry** — only need to unlock Tom.
+* **Medium:** **Encyclopedia** — less demanding than the Points Series, but requires time to unlock all characters.
+* **Hardest:** **Absolute Dedication** — unlock all achievements.
 
 ---
 
+## Beginner Tutorial Flow
+
 ### Early Game: Guide
-During the early game phase of the game, one of the best characters you should unlock is **Tom** because of his trait to add your click power. 
 
-In this phase, the easiest achievement for you to unlock would be **Tom and Jerry** which involves the user having both a Jerry (which is unlocked by default) and a Tom. 
+Unlock **Tom** first for increased click power. The easiest early achievement is **Tom and Jerry** (have a Jerry—default—and unlock a Tom).
 
-After unlocking Tom, it is recommending to progress into unlocking **Dog** due to its overpowered ability to gain points automatically. However, mandatory purchase of bones is required in order to keep **Dog** working (Bones can be purchased via *Buy Bones* Upgrade onec **Dog** is unlocked)
+After Tom, it’s **recommended** to unlock **Dog** for strong automatic point gain. Note that **Bones** are **mandatory** to keep Dog working (purchase via **Buy Bones** once **Dog** is unlocked).
 
-**Notes:** It is not recommended to Unlock **Grandma** this early due to its close-ranged attacks that would be less effective if Jerrys are not enough
-
+**Notes:** Unlocking **Grandma** this early isn’t recommended due to her close-range behavior being less effective with fewer Jerrys.
 
 ### Mid-Game: Guide
-After Unlocking **Grandma**, **Tom** and **Dog**, work your way into unlocking one of the two most powerful characters: **Godzilla** and **Bart Simpson**
 
-**Godzilla**: Clear entire row of Jerrys after it's cooldown
-**Bart Simpson** Clear every Jerrys after its cooldown
+After unlocking **Grandma**, **Tom**, and **Dog**, work toward **Godzilla** and **Bart Simpson**—two of the most powerful characters.
 
-Unlocking these two characters would dramatically increase your progress speed, allowing you to farm more points 
+* **Godzilla:** Clears an entire row of Jerrys after its cooldown.
+* **Bart Simpson:** Clears all Jerrys after its cooldown.
+
+Unlocking these two dramatically speeds up progress and farms more points.
 
 ### End-Game: Guide
-After unlocking all the characters, it is ideal to move on into unlocking the *Points Master* achievement set, which includes:
 
-- *Points Master I*: Achieve 1 Million Points
-- *Points Master II*: Achieve 10 Million Points
-- *Points Champion*: Achieve 1 Billion Points
+After unlocking all characters, aim for the **Points Master** achievement set:
 
-**Notes:**: Use and upgrade characters strategically, such as upgrading **Grandma** to the maximum to increase Jerry farming to another level
+* **Points Master I:** Achieve **1,000,000** points
+* **Points Master II:** Achieve **10,000,000** points
+* **Points Champion:** Achieve **1,000,000,000** points
 
-Other Achievements are also ideal to look into, such as:
+**Notes:** Use and upgrade characters strategically—for example, max **Grandma** to supercharge Jerry farming.
 
-- *Encylcpedia*: Unlock All Characters
-- *Absolute Dedication*: Unlock All Achievements
+Other ideal achievements to pursue:
 
-After finshing these, you would finish the game as quickly and efficently as possible.
+* **Encyclopedia:** Unlock all characters
+* **Absolute Dedication:** Unlock all achievements
 
+Complete these to finish the game as quickly and efficiently as possible.
 
 ---
 
 ## FAQ
-**寫作說明：** 列出玩家可能問的問題（例如：如何解除 mouse trap、骨頭從哪買、Grandma 為何不出現、價格為何跳很快），並給簡短解答。也可放入 debug tip（例如清除 cookies、如何回報 bug）。
 
-Q: Why doesn't trap show up?
-A: Upgrading Jerry would summon a trap, the default would show one Jerry
+**Q: Why doesn’t a Trap show up?**
+A: Adding/Upgrading Jerry can summon a Trap. By default, only one Jerry is shown at the start.
 
-Q: I bought Bart Simpson, But it didnt show up
-A: There is a 25s cooldown
+**Q: I bought Bart Simpson, but it didn’t show up.**
+A: There is a **25s** cooldown.
 
-Q: Why is Dog angry?
-A: Bones are needed to make dog continue working, buy them via "Buy Bones"
+**Q: Why is Dog angry?**
+A: **Bones** are required to keep Dog running. Buy them via **Buy Bones**.
 
 ---
 
-
 ## Contribution and Contact
-
-
 
 ---
 
 ## License
 
-
 ---
 
 ## History
+
 ### Version 1.0
-
-
-    
