@@ -2,7 +2,7 @@
 
 *Slogan: For the ultimate Tom & Jerry… and others fan!*
 
-![遊戲預覽](your_image_path)
+![遊戲預覽](static/preview.png)
 
 ## Table of contents
 
@@ -66,16 +66,16 @@ Below the Jerry screen. This is where **Tom** and **Dog** are displayed once unl
 ## Core Mechanism
 
 **Game Cycle**
-Click a Jerry to earn points. Each click yields points determined by **Jerry.reward**, which can be increased via **Toms**.
+Click a Jerry to earn points. Each click yields points , which can be increased via **Toms**.
 
-When adding a Jerry (**AddAmount Jerry**), there is a **25%** chance to summon a **Trap**. Clicking a Trap will **reduce your total points by 50%**!
+When adding a Jerry (**Clicking `AddAmount` Jerry**), there is a **25%** chance to summon a **Trap**. Clicking a Trap will **reduce your total points by 50%**!
 
-Jerrys **respawn/randomize position every three seconds**. There is **no limit** to how many Jerrys can be on your screen. Increase the amount via the **AddAmount Jerry** upgrade.
+Jerrys **respawn/randomize position every three seconds**. There is **no limit** to how many Jerrys can be on your screen. Increase the amount via the **`AddAmount` Jerry** upgrade.
 
 Scores can be used for:
-
-* Upgrade
+#### Unlock
 * Unlock
+#### Upgrade
 * BuyBones
 * IncreaseRange
 * DecreaseCD
@@ -83,8 +83,10 @@ Scores can be used for:
 
 Audio cues play for actions such as:
 
-* Clicking a Trap: *scream.mp3*
-* Achieving all achievements: *mango.mp3*
+* Clicking a Trap would trigger a screaming sound effect
+* When a dog has no bones, the dog would bark angrily!
+* When all achievements are completed, it would trigger a secret music
+* When you click a Jerry, there would be a click-sound-effect.
 
 ---
 
@@ -112,9 +114,9 @@ Destroyers clear Jerrys either **quickly with single-target** effects or **slowl
 **Slow, AOE**
 **Godzilla** and **Bart Simpson** have longer cooldowns but can clear entire rows or even the whole map—expensive but devastating.
 
-### Dealer
+#### Support
 
-A **Dealer** character boosts your point gain in different ways. The only Dealer in Season 1 is **Tom**. **Tom** increases your points per click based on how many **Toms** you own.
+A **Support** character boosts your point gain in different ways. The only Support in Season 1 is **Tom**. **Tom** increases your points per click based on how many **Toms** you own.
 
 ---
 
@@ -157,6 +159,11 @@ Can be purchased for **3,000 points** and unlocked for **5,000 points**. After i
 There are many achievements to unlock. Your ultimate goal is to collect them all; each requires a different level of dedication.
 
 * **Challenging:** **Points Series (I, II, Champion)** — requires commitment through early–mid game.
+
+    - 100k Points for Point Series I
+    - 200k Points for Point Series II
+    - 500k Points for Point Series Champion
+
 * **Beginner:** **Tom and Jerry** — only need to unlock Tom.
 * **Medium:** **Encyclopedia** — less demanding than the Points Series, but requires time to unlock all characters.
 * **Hardest:** **Absolute Dedication** — unlock all achievements.
@@ -215,13 +222,40 @@ A: **Bones** are required to keep Dog running. Buy them via **Buy Bones**.
 ---
 
 ## Contribution and Contact
+**Author:** [LoreBao]
+
+Parts of the UI styling (CSS polish) were assisted by OpenAI’s GPT.  
+All architectural decisions, game logic, and final integration were done by the author.
+
+**Contact:** [kevin.louis.1170@gmail.com]
+SPDX-FileCopyrightText: 2025 LoreBao
 
 ---
 
 ## License
+This project is licensed under the MIT License. See the full text below and include it at the root of the repository as `LICENSE` (recommended).
+
+MIT License
+
+Copyright (c) 2025 LoreBao
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
-## History
-
-### Version 1.0

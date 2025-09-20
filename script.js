@@ -1,3 +1,8 @@
+/*
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 2025 LoreBao
+*/
+
 const canvas = document.getElementById("UI");
 const ctx = canvas.getContext("2d");
 
@@ -55,6 +60,9 @@ let ACHIEVEMENTS=[
         condition:(gameManager)=>{
             const configkeys=Object.keys(CONFIG);
             for(let i=0; i<configkeys.length; i++){
+                if(configkeys[i]==="Audio"){
+                    continue;
+                }
                 if(!CONFIG[configkeys[i]].unlock){
                     return false;
                 }
@@ -83,6 +91,7 @@ let ACHIEVEMENTS=[
                     return false;
                 }
             }
+            AUDIO.play("win",1,0.2);
             return true;
         }
     },
@@ -112,13 +121,14 @@ class  AudioManager{
     }
 
     async load(){
-        // cfg : {"type":"Audio", "bark":{"url":"...", }}
-        // keys: ["type","bark","scream"]
         const keys=Object.keys(this.cfg);
-        console.log(this.cfg['bark']);
-        addLog(`${this.cfg}`);
+        
+        
         const promises=keys.map(async (key)=>{
-            const url=sthis.cfg[key].url;
+            const url="static/"+this.cfg[key].url;
+            if(!url){
+                return;
+            }
             const fetchurl=await fetch(url);
             if(!fetchurl.ok){
                 this.buffer[key]=null;
@@ -138,11 +148,14 @@ class  AudioManager{
         if(!this.unlock||!this.buffer[key]){
             addLog(`Audio ${key} has failed to load (E)`);
         }
-        if(Date.now()-this.lastPlay[key]<this.minGap[key]){
+
+        const now=Date.now();
+        const minGap=this.minGap[key]??0;
+        if(now-(this.lastPlay[key]||0)<minGap){
             return;
         }
-
-        this.lastPlay[key]=Date.now();
+        addLog(`play: ${key}:${this.buffer[key]}`);
+        this.lastPlay[key]=now;
         const player=this.ctx.createBufferSource();
         player.buffer=this.buffer[key];
         player.playbackRate.value=playbackRate;
@@ -192,7 +205,7 @@ let AUDIO = null;
     document.addEventListener("pointerdown",async ()=>{
         await AUDIO.init();
         await AUDIO.load();
-    });
+    },{once:true});
     addLog("Game has Started!");
     GAMESTARTTIME=Date.now();
     renderAchievements();
@@ -467,6 +480,7 @@ class Dog{
             }
             else{
                 this.setAction("action2");
+                AUDIO.play("bark",1,0.2);
                 addLog("Dog is angry and refuse to bring you points! Buy some bones!")
                 
             }
@@ -542,6 +556,7 @@ class GameManager {
             this.objects.jerrys.forEach((jerry)=>{
                 if(jerry.clicked(this.clickArea)){
                     this.score+=jerry.reward;
+                    AUDIO.play("click",1,0.2); 
                     addLog(`Jerry Has Been Clicked! It was at (${this.clickArea.x.toFixed(0)},${this.clickArea.y.toFixed(0)})`);
                     this.updateBoard();
                 }
@@ -640,7 +655,7 @@ function render(gameManager,config){
     const upgradeContainer=document.getElementById("UpgradeTable");
     upgradeContainer.innerHTML="";
     Object.entries(config).forEach(([type,info])=>{ //type: "Jerry", info :{"type":"Jerry","width":100..etc}
-        if(type==="Trap"){
+        if(type==="Trap"||type==="Audio"){
             return;
         }
         const div=document.createElement("div");

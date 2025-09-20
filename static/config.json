@@ -3,12 +3,21 @@
         "type":"Audio",
         "bark":{
             "url":"bark.mp3",
-            "minGap":300
+            "minGap":100
         },
         "scream":{
             "url":"scream.mp3",
-            "minGap":800
+            "minGap":100
+        },
+        "click":{
+            "url":"click.mp3",
+            "minGap":100
+        },
+        "win":{
+            "url":"win.mp3",
+            "minGap":1200
         }
+        
     },
     {
         "type": "Jerry",
