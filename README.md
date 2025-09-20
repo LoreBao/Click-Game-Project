@@ -34,7 +34,7 @@ Welcome to **Click a Jerry**! In this game, your goal is to progress and unlock 
 
 ## Quick Start
 
-Your first step is to open the *Game* tab, launch your browser (Microsoft Edge recommended), and enter: [Link](https://LoreBao.github.io/Click-Project) to **enter the game**.
+Your first step is to open the *Game* tab, launch your browser (Microsoft Edge recommended), and enter: [Link](https://LoreBao.github.io/Click-Game-Project) to **enter the game**.
 
 Next, locate a Jerry. Clicking it starts the game and gives you points for every Jerry click.
 
@@ -76,10 +76,10 @@ Scores can be used for:
 #### Unlock
 * Unlock
 #### Upgrade
-* BuyBones
-* IncreaseRange
-* DecreaseCD
-* AddAmount
+* `BuyBones`
+* `IncreaseRange`
+* `DecreaseCD`
+* `AddAmount`
 
 Audio cues play for actions such as:
 
@@ -193,9 +193,9 @@ Unlocking these two dramatically speeds up progress and farms more points.
 
 After unlocking all characters, aim for the **Points Master** achievement set:
 
-* **Points Master I:** Achieve **1,000,000** points
-* **Points Master II:** Achieve **10,000,000** points
-* **Points Champion:** Achieve **1,000,000,000** points
+    - 100k Points for Point Series I
+    - 200k Points for Point Series II
+    - 500k Points for Point Series Champion
 
 **Notes:** Use and upgrade characters strategically—for example, max **Grandma** to supercharge Jerry farming.
 
@@ -210,13 +210,13 @@ Complete these to finish the game as quickly and efficiently as possible.
 
 ## FAQ
 
-**Q: Why doesn’t a Trap show up?**
+### Q: Why doesn’t a Trap show up?
 A: Adding/Upgrading Jerry can summon a Trap. By default, only one Jerry is shown at the start.
 
-**Q: I bought Bart Simpson, but it didn’t show up.**
+### Q: I bought Bart Simpson, but it didn’t show up.
 A: There is a **25s** cooldown.
 
-**Q: Why is Dog angry?**
+### Q: Why is Dog angry?
 A: **Bones** are required to keep Dog running. Buy them via **Buy Bones**.
 
 ---
